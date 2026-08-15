@@ -1,4 +1,4 @@
-/* app.js (refactor + layout tweaks: domain padding & empty state alignment fixes) */
+/* app.js (refactor + layout tweaks: domain padding & height fixes) */
 
 (function () {
   /* -------------------------
@@ -33,7 +33,6 @@
     localStorage.setItem(META_KEY, JSON.stringify(meta));
   }
 
-  // Initialize with Admin as the only profile
   function initMeta() {
     const adminId = idGen('p');
     const meta = {
@@ -45,7 +44,6 @@
     };
     saveMeta(meta);
 
-    // create Admin profile backing data
     const profile = {
       version: 1, id: adminId, name: 'Admin',
       createdAt: nowISO(), updatedAt: nowISO(),
@@ -137,7 +135,6 @@
     localStorage.setItem(CATALOG_KEY, JSON.stringify(catalog));
   }
 
-  // Add a musical + songs to the shared catalog
   function addCatalogMusical(musical = {}, songs = []) {
     const catalog = loadCatalog();
     let mid = musical.id || idGen('m');
@@ -171,7 +168,7 @@
   }
 
   /* -------------------------
-     Profile-level operations (mutate profile data)
+     Profile-level operations
      ------------------------- */
   function addMusical(profile, { name, color } = {}) {
     const m = { id: idGen('m'), name: name || 'New Musical', color: color || '#999999', createdAt: nowISO(), updatedAt: nowISO() };
@@ -200,7 +197,6 @@
     return s;
   }
 
-  // Clone a catalog musical (and its songs) into a profile (new ids)
   function addCatalogMusicalToProfile(profile, catalogMusicalId) {
     const catalog = loadCatalog();
     const cm = catalog.musicals.find(m => m.id === catalogMusicalId);
@@ -221,7 +217,6 @@
     return newMusical;
   }
 
-  // Add imported musical JSON directly into a profile (used for paste-import into profile)
   function addImportedMusicalToProfile(profile, musicalObj, songsArr) {
     if (!musicalObj || (!musicalObj.name && !musicalObj.title)) throw new Error('Invalid musical object');
     const name = musicalObj.name || musicalObj.title || 'Imported Musical';
@@ -248,7 +243,7 @@
   }
 
   /* -------------------------
-     D3 violin rendering (lazy load)
+     D3 violin rendering
      ------------------------- */
   function loadD3And(fn) {
     if (window.d3) return fn();
@@ -273,7 +268,6 @@
     };
   }
   function buildDensity(values) {
-    // Extended sampling range beyond 1-5 so KDE smoothing can fully taper off
     const yMin = 0.4, yMax = 5.6;
     const samplePoints = d3.range(yMin, yMax + 1e-9, (yMax - yMin) / 60);
     const kde = kernelDensityEstimator(kernelEpanechnikov(0.35), samplePoints);
@@ -282,7 +276,7 @@
 
   function renderViolin(container, values, options = {}) {
     const width = options.width || (container.clientWidth || 300);
-    const height = options.height || (container.clientHeight || 260);
+    const height = options.height || (container.clientHeight || 220);
     container.innerHTML = '';
     const svg = d3.select(container).append('svg').attr('width', width).attr('height', height);
     
@@ -291,7 +285,6 @@
     const innerH = height - margin.top - margin.bottom;
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
     
-    // Domain expanded from [1, 5] to [0.4, 5.6] to allow Tier 5 and Tier 1 density curves to fit inside innerH
     const yScale = d3.scaleLinear().domain([0.4, 5.6]).range([innerH, 0]);
 
     const validVals = values.filter(v => v !== null && v !== undefined && !isNaN(v)).map(Number);
@@ -341,7 +334,6 @@
         }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#999').append('title').text(d => d.title);
       }
     } else {
-      // Render central baseline if no songs have assigned tiers
       g.append('line')
         .attr('x1', innerW / 2)
         .attr('x2', innerW / 2)
@@ -365,7 +357,7 @@
   }
 
   /* -------------------------
-     DOM elements (cached)
+     DOM elements
      ------------------------- */
   const profileSelect = qs('#profile-select');
   const btnNewProfile = qs('#btn-new-profile');
@@ -378,7 +370,6 @@
   const overviewEl = qs('#overview-violin');
   const musicalsListEl = qs('#musicals-list');
 
-  // modal internals
   const musicalFields = qs('#musical-fields');
   const musicalJsonArea = qs('#musical-json');
   const musicalNameInput = qs('#musical-name');
@@ -388,7 +379,7 @@
   const catalogListEl = qs('#catalog-list');
 
   /* -------------------------
-     UI rendering: catalog list (scrollable) + music cards
+     UI rendering
      ------------------------- */
   function populateCatalogList() {
     if (!catalogListEl) return;
@@ -438,7 +429,7 @@
     loadD3And(() => {
       renderViolin(overviewEl, vals, {
         width: overviewEl.clientWidth || 900,
-        height: 440,
+        height: 260,
         fill: 'rgba(247,243,236,0.95)',
         stroke: '#d6d0c2',
         dotData: makeDotData(profile, profile.songs)
@@ -456,7 +447,12 @@
       const actions = document.createElement('div'); actions.style.marginLeft = 'auto';
       const btnView = document.createElement('button'); btnView.className = 'small-btn'; btnView.textContent = 'Expand';
       const btnDelete = document.createElement('button'); btnDelete.className = 'small-btn'; btnDelete.textContent = 'Delete';
-      btnView.addEventListener('click', () => card.classList.toggle('expanded'));
+      
+      btnView.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+        btnView.textContent = card.classList.contains('expanded') ? 'Collapse' : 'Expand';
+      });
+
       btnDelete.addEventListener('click', () => {
         if (!confirm(`Delete musical "${m.name}" and its songs?`)) return;
         deleteMusicalAndSongs(profile, m.id);
@@ -499,10 +495,15 @@
       }
       card.appendChild(songList);
 
-      // attach per-musical violin
+      // Height set to 220 to match card CSS bounds cleanly
       const vals = songsForM.map(s => s.tier);
       loadD3And(() => {
-        renderViolin(violinWrap, vals, { height: 300, fill: 'rgba(255,255,255,0.96)', stroke: '#e0dbcc', dotData: makeDotData(profile, songsForM) });
+        renderViolin(violinWrap, vals, { 
+          height: 220, 
+          fill: 'rgba(255,255,255,0.96)', 
+          stroke: '#e0dbcc', 
+          dotData: makeDotData(profile, songsForM) 
+        });
       });
 
       musicalsListEl.appendChild(card);
@@ -510,7 +511,7 @@
   }
 
   /* -------------------------
-     Modal open/close and behavior
+     Modal behavior
      ------------------------- */
   function isAdminActive() {
     const p = getActiveProfile();
@@ -558,7 +559,7 @@
   }
 
   /* -------------------------
-     Admin "clear all" (destructive)
+     Admin functions
      ------------------------- */
   function clearAllData() {
     if (!isAdminActive()) return alert('Only Admin can clear data.');
@@ -639,7 +640,7 @@
   }
 
   /* -------------------------
-     Initialization & UI helpers
+     Initialization
      ------------------------- */
   function refreshProfileSelect() {
     const meta = loadMeta();
