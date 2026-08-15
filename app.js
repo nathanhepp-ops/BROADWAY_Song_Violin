@@ -400,7 +400,6 @@
   const overviewEl = qs('#overview-violin');
   const musicalsListEl = qs('#musicals-list');
 
-  const musicalFields = qs('#musical-fields');
   const musicalJsonArea = qs('#musical-json');
   const musicalNameInput = qs('#musical-name');
   const musicalColorInput = qs('#musical-color');
@@ -568,27 +567,21 @@
 
     populateCatalogList();
 
-    const modalTitle = qs('#modal h2') || qs('#modal h3') || qs('.modal-title');
-
-    const jsonLabel = musicalJsonArea ? musicalJsonArea.parentElement : null;
-    const nameLabel = musicalNameInput ? musicalNameInput.parentElement : null;
+    const modalTitle = qs('#modal-title') || qs('#modal h3') || qs('.modal-title');
+    const adminSection = qs('#admin-section');
 
     if (admin) {
-      if (nameLabel) nameLabel.style.display = '';
-      if (jsonLabel) jsonLabel.style.display = '';
+      if (adminSection) adminSection.style.display = 'block';
       if (catalogEmptyMsg) catalogEmptyMsg.style.display = 'none';
-      if (modalSaveBtn) modalSaveBtn.style.display = '';
       if (modalTitle) modalTitle.textContent = 'Add Musical';
-      modalSaveBtn.disabled = false;
     } else {
-      if (nameLabel) nameLabel.style.display = 'none';
-      if (jsonLabel) jsonLabel.style.display = 'none';
-      if (modalSaveBtn) modalSaveBtn.style.display = 'none';
+      // Hide the full creation container for non-admin users
+      if (adminSection) adminSection.style.display = 'none';
       if (modalTitle) modalTitle.textContent = 'Select a Musical';
 
       const catalog = loadCatalog();
       if (!catalog || !catalog.musicals.length) {
-        catalogEmptyMsg.style.display = '';
+        catalogEmptyMsg.style.display = 'block';
       } else {
         catalogEmptyMsg.style.display = 'none';
       }
