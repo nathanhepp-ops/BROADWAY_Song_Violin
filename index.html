@@ -8,8 +8,16 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* small modal catalog list styles */
-    .catalog-list { max-height: 260px; overflow:auto; border:1px solid rgba(0,0,0,0.06); padding:6px; border-radius:6px; background: #fff; }
+    /* layout tweaks for violin visibility and song-list scrolling */
+    html, body { height: auto; min-height: 100%; }
+    /* overview container should give plenty of vertical room */
+    #overview-violin { min-height: 340px; margin-bottom: 12px; }
+    /* per-musical violin smaller but tall enough to avoid clipping */
+    .violin { min-height: 180px; }
+    /* let song lists expand normally and let the page scroll (don't cap their height) */
+    .song-list { max-height: none; overflow: visible; }
+    /* catalog list stays scrollable but a bit taller for long lists */
+    .catalog-list { max-height: 60vh; overflow:auto; border:1px solid rgba(0,0,0,0.06); padding:6px; border-radius:6px; background: #fff; }
     .catalog-item { padding:8px 10px; border-radius:6px; margin:4px 0; display:flex; align-items:center; gap:10px; cursor:pointer; }
     .catalog-item:hover, .catalog-item:focus { background: rgba(0,0,0,0.02); outline: none; }
     .catalog-dot { width:12px; height:12px; border-radius:3px; flex:0 0 12px; }
@@ -73,7 +81,7 @@
   </div>
 
   <footer class="footer">
-    <!-- footer text removed as requested -->
+    <!-- footer text removed -->
   </footer>
 
   <script src="app.js"></script>
