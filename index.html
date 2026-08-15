@@ -19,6 +19,7 @@
       </label>
       <button id="btn-new-profile" class="small-btn">New Profile</button>
       <button id="btn-delete-profile" class="small-btn">Delete Profile</button>
+      <button id="btn-clear-all" class="small-btn" style="display:none">Clear All</button>
 
       <!-- only add musical button kept -->
       <button id="btn-add-musical">+ Musical</button>
@@ -48,7 +49,7 @@
 
           <!-- catalog select inserted dynamically by JS when available -->
 
-          <!-- paste musical JSON to create musical + songs in the active profile -->
+          <!-- paste musical JSON to create musical + songs in the shared catalog (Admin only) -->
           <label id="label-musical-json" style="margin-top:8px">Paste musical JSON (Admin only):<br>
             <textarea id="musical-json" rows="6" placeholder='{"type":"musical","musical":{...},"songs":[...]}'></textarea>
           </label>
