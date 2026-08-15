@@ -1,8 +1,11 @@
 /* app.js (refactored single-file)
    - Single-file app kept for simple deployment (no build step)
    - Internally modularized with clear sections and comments
-   - Behavior preserved: Admin manages catalog; non-admin selects from catalog list (immediate add)
-   - Admin-only Clear All included
+   - Behavior preserved except where changed per request:
+     * Start with Admin only
+     * No per-song delete button
+     * Admin always saves to catalog (no checkbox)
+     * Footer text removed
 */
 
 (function () {
@@ -38,27 +41,27 @@
     localStorage.setItem(META_KEY, JSON.stringify(meta));
   }
 
+  // Initialize with Admin as the only profile
   function initMeta() {
-    const profileId = idGen('p');
+    const adminId = idGen('p');
     const meta = {
       version: 1,
-      profiles: [{ id: profileId, name: 'Default', createdAt: nowISO(), updatedAt: nowISO() }],
-      activeProfileId: profileId,
+      profiles: [{ id: adminId, name: 'Admin', createdAt: nowISO(), updatedAt: nowISO() }],
+      activeProfileId: adminId,
       createdAt: nowISO(),
       updatedAt: nowISO()
     };
     saveMeta(meta);
 
-    // create default profile backing data
+    // create Admin profile backing data
     const profile = {
-      version: 1, id: profileId, name: 'Default',
+      version: 1, id: adminId, name: 'Admin',
       createdAt: nowISO(), updatedAt: nowISO(),
       musicals: [], songs: []
     };
     saveProfile(profile);
 
     initCatalog();
-    ensureAdminProfile();
     return meta;
   }
 
@@ -264,7 +267,6 @@
     document.head.appendChild(s);
   }
 
-  // density helpers
   function kernelEpanechnikov(k) {
     return function (v) {
       v = v / k;
@@ -313,7 +315,6 @@
       .attr('stroke', options.stroke || '#c9c4b8')
       .attr('stroke-width', 1.2);
 
-    // tier gridlines and labels
     const tiers = [1, 2, 3, 4, 5];
     g.selectAll('.tier-line').data(tiers).enter()
       .append('line')
@@ -325,7 +326,6 @@
       .append('text').attr('x', 4).attr('y', d => yScale(d) - 6).text(d => d)
       .attr('font-size', 11).attr('fill', '#777');
 
-    // dot plotting (if provided)
     if (options.dotData && options.dotData.length) {
       const densArr = density;
       function densityAt(y) {
@@ -373,7 +373,6 @@
   const musicalJsonArea = qs('#musical-json');
   const musicalNameInput = qs('#musical-name');
   const musicalColorInput = qs('#musical-color');
-  const saveToCatalogCheckbox = qs('#save-to-catalog');
   const catalogEmptyMsg = qs('#catalog-empty-msg');
   const modalSaveBtn = qs('#modal-save');
   const catalogListEl = qs('#catalog-list');
@@ -483,9 +482,8 @@
             saveProfile(profile);
             renderAll();
           });
-          const del = document.createElement('button'); del.className = 'small-btn'; del.textContent = 'Delete';
-          del.addEventListener('click', () => { if (!confirm('Delete song?')) return; profile.songs = profile.songs.filter(x => x.id !== s.id); saveProfile(profile); renderAll(); });
-          right.appendChild(tier); right.appendChild(del);
+          // NOTE: per-song Delete button removed per request
+          right.appendChild(tier);
           row.appendChild(left); row.appendChild(right);
           songList.appendChild(row);
         });
@@ -517,20 +515,16 @@
     populateCatalogList();
 
     if (admin) {
-      // Admin: show create/paste controls, show catalog as reference (but admin clicks won't clone)
       if (musicalNameInput) musicalNameInput.parentElement.style.display = '';
       if (musicalColorInput) musicalColorInput.parentElement.style.display = '';
       if (musicalJsonArea) musicalJsonArea.parentElement.style.display = '';
-      if (saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = '';
       if (catalogEmptyMsg) catalogEmptyMsg.style.display = 'none';
       if (modalSaveBtn) modalSaveBtn.style.display = '';
       modalSaveBtn.disabled = false;
     } else {
-      // Non-admin: hide create/paste controls; catalog list is the only way to add
       if (musicalNameInput) musicalNameInput.parentElement.style.display = 'none';
       if (musicalColorInput) musicalColorInput.parentElement.style.display = 'none';
       if (musicalJsonArea) musicalJsonArea.parentElement.style.display = 'none';
-      if (saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = 'none';
       const catalog = loadCatalog();
       if (!catalog || !catalog.musicals.length) {
         catalogEmptyMsg.style.display = '';
@@ -543,11 +537,9 @@
       }
     }
 
-    // clear fields
     if (musicalJsonArea) musicalJsonArea.value = '';
     if (musicalNameInput) musicalNameInput.value = '';
     if (musicalColorInput) musicalColorInput.value = '#ff7043';
-    if (saveToCatalogCheckbox) saveToCatalogCheckbox.checked = true;
   }
 
   function closeModal() {
@@ -569,7 +561,7 @@
     initCatalog();
     refreshProfileSelect();
     renderAll();
-    alert('All data cleared. Default and Admin profiles recreated.');
+    alert('All data cleared. Admin recreated.');
   }
 
   /* -------------------------
@@ -592,7 +584,6 @@
   if (btnAddMusical) btnAddMusical.addEventListener('click', () => openModal());
   if (modalClose) modalClose.addEventListener('click', closeModal);
 
-  // Admin Save (creates catalog musical from name or from pasted JSON)
   if (modalForm) modalForm.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const profile = getActiveProfile(); if (!profile) return alert('No active profile');
@@ -619,7 +610,6 @@
         alert('Added musical to catalog.');
       }
     } else {
-      // Non-admins shouldn't submit the form (Save is hidden) — defensive fallback:
       alert('Choose a musical from the list to add it to your profile.');
     }
 
@@ -627,7 +617,6 @@
     renderAll();
   });
 
-  // storage events (sync across tabs)
   window.addEventListener('storage', (e) => {
     if (!e.key) return;
     if (e.key === META_KEY || e.key.startsWith(PROFILE_KEY_PREFIX) || e.key === CATALOG_KEY || e.key === null) {
@@ -636,24 +625,13 @@
     }
   });
 
-  // register service worker gently (best-effort)
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').catch(() => { /* ignore sw errors */ });
+    navigator.serviceWorker.register('/service-worker.js').catch(() => { /* ignore */ });
   }
 
   /* -------------------------
      Initialization & UI helpers
      ------------------------- */
-  function ensureAdminProfile() {
-    const meta = loadMeta();
-    if (meta.profiles.find(p => p.name === 'Admin')) return;
-    const adminId = idGen('p');
-    const admin = { version: 1, id: adminId, name: 'Admin', createdAt: nowISO(), updatedAt: nowISO(), musicals: [], songs: [] };
-    saveProfile(admin);
-    meta.profiles.push({ id: admin.id, name: admin.name, createdAt: admin.createdAt, updatedAt: admin.updatedAt });
-    saveMeta(meta);
-  }
-
   function refreshProfileSelect() {
     const meta = loadMeta();
     if (!profileSelect) return;
@@ -672,6 +650,16 @@
     if (!modal.classList.contains('hidden')) openModal();
   }
 
+  function ensureAdminProfile() {
+    const meta = loadMeta();
+    if (meta.profiles.find(p => p.name === 'Admin')) return;
+    const adminId = idGen('p');
+    const admin = { version: 1, id: adminId, name: 'Admin', createdAt: nowISO(), updatedAt: nowISO(), musicals: [], songs: [] };
+    saveProfile(admin);
+    meta.profiles.push({ id: admin.id, name: admin.name, createdAt: admin.createdAt, updatedAt: admin.updatedAt });
+    saveMeta(meta);
+  }
+
   function renderAll() {
     const profile = getActiveProfile();
     if (!profile) { if (musicalsListEl) musicalsListEl.innerHTML = '<p>No profile selected</p>'; if (overviewEl) overviewEl.innerHTML = ''; return; }
@@ -680,26 +668,18 @@
     updateAdminUI();
   }
 
-  /* -------------------------
-     Initial boot
-     ------------------------- */
+  // boot
   initCatalog();
   ensureAdminProfile();
   refreshProfileSelect();
   renderAll();
 
-  /* -------------------------
-     Public debug API
-     ------------------------- */
+  // public debug API
   window.bsv = {
-    // storage / meta
     loadMeta, saveMeta, listProfiles, createProfile, deleteProfile, setActiveProfile,
     getActiveProfile, saveProfile,
-    // catalog
     loadCatalog, saveCatalog, addCatalogMusical,
-    // profile operations
     addCatalogMusicalToProfile, addImportedMusicalToProfile,
-    // helpers
     renderAll
   };
 
