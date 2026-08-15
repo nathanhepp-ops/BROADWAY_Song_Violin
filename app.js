@@ -290,6 +290,7 @@
       return Math.abs(v) <= 1 ? 0.75 * (1 - v * v) / k : 0;
     };
   }
+
   function kernelDensityEstimator(kernel, X) {
     return function (V) {
       return X.map(function (x) {
@@ -297,6 +298,7 @@
       });
     };
   }
+
   function buildDensity(values) {
     const yMin = 0.4, yMax = 5.6;
     const samplePoints = d3.range(yMin, yMax + 1e-9, (yMax - yMin) / 60);
@@ -479,9 +481,41 @@
         card.classList.add('expanded');
       }
 
+      const songsForM = (profile.songs || []).filter(s => s.musicalId === m.id);
+
+      // --- Calculate Statistics ---
+      const validScores = songsForM
+        .map(s => s.tier)
+        .filter(t => t !== null && t !== undefined && !isNaN(t))
+        .map(Number)
+        .sort((a, b) => a - b);
+
+      let avgStr = 'N/A';
+      let medianStr = 'N/A';
+
+      if (validScores.length > 0) {
+        const sum = validScores.reduce((acc, val) => acc + val, 0);
+        avgStr = (sum / validScores.length).toFixed(1);
+
+        const mid = Math.floor(validScores.length / 2);
+        if (validScores.length % 2 === 0) {
+          medianStr = ((validScores[mid - 1] + validScores[mid]) / 2).toFixed(1);
+        } else {
+          medianStr = validScores[mid].toFixed(1);
+        }
+      }
+
       const header = document.createElement('div'); header.className = 'card-header';
       const dot = document.createElement('div'); dot.className = 'color-dot'; dot.style.background = m.color;
-      const title = document.createElement('div'); title.innerHTML = `<strong>${m.name}</strong>`;
+      
+      const title = document.createElement('div'); 
+      title.innerHTML = `
+        <strong>${m.name}</strong>
+        <div style="font-size:0.8rem; color:#666; margin-top:2px;">
+          Avg: ${avgStr} | Median: ${medianStr}
+        </div>
+      `;
+
       const actions = document.createElement('div'); actions.style.marginLeft = 'auto';
       const btnView = document.createElement('button'); btnView.className = 'small-btn'; 
       btnView.textContent = isExpanded ? 'Collapse' : 'Expand';
@@ -502,6 +536,7 @@
         deleteMusicalAndSongs(profile, m.id);
         renderAll();
       });
+
       actions.appendChild(btnView); actions.appendChild(btnDelete);
       header.appendChild(dot); header.appendChild(title); header.appendChild(actions);
       card.appendChild(header);
@@ -510,7 +545,6 @@
       card.appendChild(violinWrap);
 
       const songList = document.createElement('div'); songList.className = 'song-list';
-      const songsForM = (profile.songs || []).filter(s => s.musicalId === m.id);
       if (!songsForM.length) {
         const p = document.createElement('p'); p.style.color = '#777'; p.textContent = 'No songs yet'; songList.appendChild(p);
       } else {
@@ -575,7 +609,6 @@
       if (catalogEmptyMsg) catalogEmptyMsg.style.display = 'none';
       if (modalTitle) modalTitle.textContent = 'Add Musical';
     } else {
-      // Hide the full creation container for non-admin users
       if (adminSection) adminSection.style.display = 'none';
       if (modalTitle) modalTitle.textContent = 'Select a Musical';
 
