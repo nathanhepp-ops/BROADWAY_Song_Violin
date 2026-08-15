@@ -241,6 +241,7 @@
   const profileSelect = qs('#profile-select');
   const btnNewProfile = qs('#btn-new-profile');
   const btnDeleteProfile = qs('#btn-delete-profile');
+  const btnClearAll = qs('#btn-clear-all');
   const btnAddMusical = qs('#btn-add-musical');
   const modal = qs('#modal');
   const modalForm = qs('#modal-form');
@@ -263,7 +264,16 @@
     return p && p.name === 'Admin';
   }
 
-  // Modal helpers
+  // --- Admin UI helpers ---
+  function updateAdminUI(){
+    const admin = isAdminActive();
+    // show/hide Clear All button
+    if(btnClearAll) btnClearAll.style.display = admin ? 'inline-block' : 'none';
+    // ensure modal field visibility matches current admin state if modal open
+    if(!modal.classList.contains('hidden')) openModal();
+  }
+
+  // --- Modal helpers ---
   function openModal(){
     modal.classList.remove('hidden');
     const admin = isAdminActive();
@@ -279,9 +289,7 @@
       if(musicalJsonArea) musicalJsonArea.parentElement.style.display = '';
       if(saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = '';
       catalogEmptyMsg.style.display = 'none';
-      // hide catalog select if present
       if(catalogSelect && catalogSelect.parentElement) catalogSelect.parentElement.style.display = 'none';
-      // enable save
       modalSaveBtn.disabled = false;
     } else {
       // Non-admin: hide name/color/json and save-to-catalog; show catalog select
@@ -289,9 +297,7 @@
       if(musicalColorInput) musicalColorInput.parentElement.style.display = 'none';
       if(musicalJsonArea) musicalJsonArea.parentElement.style.display = 'none';
       if(saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = 'none';
-      // show catalog select
       if(catalogSelect && catalogSelect.parentElement) catalogSelect.parentElement.style.display = '';
-      // If catalog empty, show message and disable save
       const catalog = loadCatalog();
       if(!catalog || !catalog.musicals.length){
         catalogEmptyMsg.style.display = '';
@@ -310,6 +316,26 @@
   }
   function closeModal(){ modal.classList.add('hidden'); modalForm.reset(); if(musicalJsonArea) musicalJsonArea.value = ''; }
 
+  // --- Clear all data (Admin only) ---
+  function clearAllData(){
+    if(!isAdminActive()) return alert('Only Admin can clear data.');
+    if(!confirm('Delete ALL profiles and catalog data from this browser? This cannot be undone.')) return;
+    // remove keys that belong to the app
+    const keys = Object.keys(localStorage);
+    keys.forEach(k => {
+      if(k === META_KEY || k === CATALOG_KEY || k.startsWith(PROFILE_KEY_PREFIX)) {
+        localStorage.removeItem(k);
+      }
+    });
+    // re-init default meta and catalog
+    initMeta();
+    initCatalog();
+    refreshProfileSelect();
+    updateAdminUI();
+    renderAll();
+    alert('All profile and catalog data cleared. Default and Admin profiles recreated.');
+  }
+
   // Profile UI functions
   function refreshProfileSelect(){
     const meta = loadMeta();
@@ -319,6 +345,7 @@
       if(meta.activeProfileId === p.id) opt.selected = true;
       profileSelect.appendChild(opt);
     });
+    updateAdminUI();
   }
 
   // Render everything for active profile
@@ -331,6 +358,7 @@
     }
     renderOverview(profile);
     renderMusicalCards(profile);
+    updateAdminUI();
   }
 
   // --- Violin rendering using D3 (dynamically loaded) ---
@@ -575,6 +603,8 @@
     renderAll();
   });
 
+  if(btnClearAll) btnClearAll.addEventListener('click', clearAllData);
+
   profileSelect.addEventListener('change', (e) => {
     setActiveProfile(e.target.value);
     renderAll();
@@ -591,7 +621,7 @@
     const admin = isAdminActive();
 
     if(admin){
-      // Admin flow: add to catalog only (no cloning into Admin profile)
+      // Admin flow: add to catalog only (no per-Admin cloning)
       const jsonTxt = musicalJsonArea ? musicalJsonArea.value.trim() : '';
       const chosenCatalogId = catalogSelect ? catalogSelect.value : '';
       if(jsonTxt){
@@ -607,7 +637,7 @@
           return;
         }
       } else if(chosenCatalogId){
-        // Admin selected an existing catalog item — nothing to add (it's already in catalog)
+        // Admin selected existing catalog item — no-op for catalog management
         alert('That musical is already in the catalog. To add it to a profile, switch to the target profile and choose it from the catalog.');
       } else {
         // manual create -> add to catalog only
