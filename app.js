@@ -189,7 +189,7 @@
     Object.assign(s, updates); s.updatedAt = nowISO(); saveProfile(profile); return s;
   }
   function deleteSong(profile, id){
-    profile.songs = profile.songs.filter(x => x.id === id); saveProfile(profile);
+    profile.songs = profile.songs.filter(x => x.id !== id); saveProfile(profile);
   }
 
   // Clone a catalog musical (and its songs) into a profile (generates new ids)
@@ -274,6 +274,26 @@
   }
 
   // --- Modal helpers ---
+  function onCatalogSelectChangeImmediate(){
+    // For non-admin profiles: when the selection changes to a valid catalog id,
+    // immediately clone to the active profile and close the modal.
+    if(!catalogSelect) return;
+    const val = catalogSelect.value;
+    if(!val) return;
+    if(!isAdminActive()){
+      try {
+        const profile = getActiveProfile();
+        if(!profile) return alert('No active profile');
+        addCatalogMusicalToProfile(profile, val);
+        closeModal();
+        renderAll();
+      } catch(err){
+        alert('Failed to add catalog musical: ' + (err.message || err));
+      }
+    }
+    // If admin selected an existing catalog item, we keep the select visible but admin uses Save for catalog management.
+  }
+
   function openModal(){
     modal.classList.remove('hidden');
     const admin = isAdminActive();
@@ -281,15 +301,23 @@
     // Ensure catalogSelect exists and populate
     populateCatalogSelect();
 
+    // attach the immediate-change handler once
+    if(catalogSelect && !catalogSelect._immediateHandlerBound){
+      catalogSelect.addEventListener('change', onCatalogSelectChangeImmediate);
+      catalogSelect._immediateHandlerBound = true;
+    }
+
     // Show/hide input fields based on admin status
     if(admin){
-      // Admin: show name/color/json & save-to-catalog; hide catalog select
+      // Admin: show name/color/json & save-to-catalog; hide catalog select (admin manages via inputs)
       if(musicalNameInput) musicalNameInput.parentElement.style.display = '';
       if(musicalColorInput) musicalColorInput.parentElement.style.display = '';
       if(musicalJsonArea) musicalJsonArea.parentElement.style.display = '';
       if(saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = '';
       catalogEmptyMsg.style.display = 'none';
       if(catalogSelect && catalogSelect.parentElement) catalogSelect.parentElement.style.display = 'none';
+      // Show Save for admin
+      if(modalSaveBtn) modalSaveBtn.style.display = '';
       modalSaveBtn.disabled = false;
     } else {
       // Non-admin: hide name/color/json and save-to-catalog; show catalog select
@@ -301,9 +329,13 @@
       const catalog = loadCatalog();
       if(!catalog || !catalog.musicals.length){
         catalogEmptyMsg.style.display = '';
+        // Hide Save for non-admin when no catalog items
+        if(modalSaveBtn) modalSaveBtn.style.display = '';
         modalSaveBtn.disabled = true;
       } else {
         catalogEmptyMsg.style.display = 'none';
+        // Hide Save for non-admin users (they don't need it)
+        if(modalSaveBtn) modalSaveBtn.style.display = 'none';
         modalSaveBtn.disabled = false;
       }
     }
@@ -648,7 +680,8 @@
         alert('Added musical to catalog.');
       }
     } else {
-      // Non-admin: only allow choosing from catalog and cloning into the active profile
+      // Non-admin submits: this path should not be used because Save is hidden.
+      // As a fallback, clone chosen catalog item if present.
       const chosenCatalogId = catalogSelect ? catalogSelect.value : '';
       if(!chosenCatalogId){
         alert('Choose a catalog musical to add.');
