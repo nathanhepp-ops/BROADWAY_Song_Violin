@@ -154,7 +154,7 @@
         id: sid,
         title: s.title,
         musicalId: mid,
-        tier: Math.max(1,Math.min(5, Number(s.tier)||3)),
+        tier: (s.tier === undefined ? null : Math.max(1,Math.min(5, Number(s.tier)||3))),
         createdAt: s.createdAt || nowISO(),
         updatedAt: nowISO()
       };
@@ -181,7 +181,7 @@
     saveProfile(profile);
   }
   function addSong(profile, {title, musicalId, tier}){
-    const s = { id: idGen('s'), title: title || 'New Song', musicalId: musicalId || null, tier: Math.max(1,Math.min(5, Number(tier)||3)), createdAt: nowISO(), updatedAt: nowISO() };
+    const s = { id: idGen('s'), title: title || 'New Song', musicalId: musicalId || null, tier: (tier === undefined ? null : Math.max(1,Math.min(5, Number(tier)||3))), createdAt: nowISO(), updatedAt: nowISO() };
     profile.songs.push(s); saveProfile(profile); return s;
   }
   function editSong(profile, id, updates){
@@ -205,7 +205,7 @@
     const csongs = catalog.songs.filter(s => s.musicalId === cm.id);
     csongs.forEach(s => {
       const newSid = idGen('s');
-      const ns = { id: newSid, title: s.title, musicalId: newMid, tier: s.tier || 3, createdAt: nowISO(), updatedAt: nowISO() };
+      const ns = { id: newSid, title: s.title, musicalId: newMid, tier: s.tier || null, createdAt: nowISO(), updatedAt: nowISO() };
       profile.songs.push(ns);
     });
     saveProfile(profile);
@@ -226,7 +226,7 @@
         id: newSid,
         title: s.title || s.name || 'Song',
         musicalId: newMid,
-        tier: Math.max(1,Math.min(5, Number(s.tier) || 3)),
+        tier: (s.tier === undefined ? null : Math.max(1,Math.min(5, Number(s.tier) || 3))),
         createdAt: s.createdAt || nowISO(),
         updatedAt: s.updatedAt || nowISO()
       };
@@ -250,15 +250,63 @@
 
   // musical modal elements (some inserted dynamically)
   const musicalFields = qs('#musical-fields');
+  const musicalJsonArea = qs('#musical-json');
+  const musicalNameInput = qs('#musical-name');
+  const musicalColorInput = qs('#musical-color');
+  const saveToCatalogCheckbox = qs('#save-to-catalog');
+  const catalogEmptyMsg = qs('#catalog-empty-msg');
+  const modalSaveBtn = qs('#modal-save');
   let catalogSelect = null;
-  let musicalJsonArea = qs('#musical-json');
+
+  function isAdminActive(){
+    const p = getActiveProfile();
+    return p && p.name === 'Admin';
+  }
 
   // Modal helpers
   function openModal(){
     modal.classList.remove('hidden');
-    modalTitle && (modalTitle.textContent = 'Add Musical');
+    const admin = isAdminActive();
+
+    // Ensure catalogSelect exists and populate
     populateCatalogSelect();
+
+    // Show/hide input fields based on admin status
+    if(admin){
+      // Admin: show name/color/json & save-to-catalog; hide catalog select
+      if(musicalNameInput) musicalNameInput.parentElement.style.display = '';
+      if(musicalColorInput) musicalColorInput.parentElement.style.display = '';
+      if(musicalJsonArea) musicalJsonArea.parentElement.style.display = '';
+      if(saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = '';
+      catalogEmptyMsg.style.display = 'none';
+      // hide catalog select if present
+      if(catalogSelect && catalogSelect.parentElement) catalogSelect.parentElement.style.display = 'none';
+      // enable save
+      modalSaveBtn.disabled = false;
+    } else {
+      // Non-admin: hide name/color/json and save-to-catalog; show catalog select
+      if(musicalNameInput) musicalNameInput.parentElement.style.display = 'none';
+      if(musicalColorInput) musicalColorInput.parentElement.style.display = 'none';
+      if(musicalJsonArea) musicalJsonArea.parentElement.style.display = 'none';
+      if(saveToCatalogCheckbox) saveToCatalogCheckbox.parentElement.style.display = 'none';
+      // show catalog select
+      if(catalogSelect && catalogSelect.parentElement) catalogSelect.parentElement.style.display = '';
+      // If catalog empty, show message and disable save
+      const catalog = loadCatalog();
+      if(!catalog || !catalog.musicals.length){
+        catalogEmptyMsg.style.display = '';
+        modalSaveBtn.disabled = true;
+      } else {
+        catalogEmptyMsg.style.display = 'none';
+        modalSaveBtn.disabled = false;
+      }
+    }
+
+    // clear inputs
     if(musicalJsonArea) musicalJsonArea.value = '';
+    if(musicalNameInput) musicalNameInput.value = '';
+    if(musicalColorInput) musicalColorInput.value = '#ff7043';
+    if(saveToCatalogCheckbox) saveToCatalogCheckbox.checked = true;
   }
   function closeModal(){ modal.classList.add('hidden'); modalForm.reset(); if(musicalJsonArea) musicalJsonArea.value = ''; }
 
@@ -325,7 +373,7 @@
     const innerH = height - margin.top - margin.bottom;
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
     const yScale = d3.scaleLinear().domain([1,5]).range([innerH,0]);
-    const density = buildDensity(values.map(Number));
+    const density = buildDensity(values.filter(v => v !== null && v !== undefined).map(Number));
     const maxDensity = d3.max(density, d => d[1]) || 1;
     const xScale = d3.scaleLinear().domain([-maxDensity, maxDensity]).range([0, innerW]);
 
@@ -386,10 +434,12 @@
   }
 
   function makeDotData(profile, songs){
-    return songs.map(s => {
-      const m = profile.musicals.find(x => x.id === s.musicalId) || {color:'#999', name:'Unknown'};
-      return { id: s.id, title: `${s.title} — ${m.name}`, y: s.tier, color: m.color };
-    });
+    return songs
+      .filter(s => s.tier !== null && s.tier !== undefined)
+      .map(s => {
+        const m = profile.musicals.find(x => x.id === s.musicalId) || {color:'#999', name:'Unknown'};
+        return { id: s.id, title: `${s.title} — ${m.name}`, y: s.tier, color: m.color };
+      });
   }
 
   function renderOverview(profile){
@@ -439,13 +489,21 @@
           const left = document.createElement('div'); left.textContent = s.title;
           const right = document.createElement('div');
           const tier = document.createElement('select');
+          // placeholder for unset/null tier
+          const emptyOpt = document.createElement('option'); emptyOpt.value = ''; emptyOpt.textContent = '-';
+          tier.appendChild(emptyOpt);
           [1,2,3,4,5].forEach(t => {
             const o = document.createElement('option'); o.value = t; o.textContent = t;
-            if(t === s.tier) o.selected = true;
+            if(s.tier === t) o.selected = true;
             tier.appendChild(o);
           });
+          // select current value (null -> empty)
+          if(s.tier === null || s.tier === undefined) tier.value = '';
           tier.addEventListener('change', (e) => {
-            s.tier = Number(e.target.value); saveProfile(profile); renderAll();
+            const val = e.target.value;
+            s.tier = val === '' ? null : Number(val);
+            saveProfile(profile);
+            renderAll();
           });
           const del = document.createElement('button'); del.className = 'small-btn'; del.textContent = 'Delete';
           del.addEventListener('click', ()=> {
@@ -480,7 +538,7 @@
       // create and insert a catalog select into musicalFields
       const wrap = document.createElement('div');
       wrap.style.marginTop = '6px';
-      wrap.innerHTML = `<label>Or choose from catalog: <select id="catalog-select"></select></label>`;
+      wrap.innerHTML = `<label>Choose from catalog: <select id="catalog-select"></select></label>`;
       musicalFields.appendChild(wrap);
       catalogSelect = qs('#catalog-select');
     }
@@ -491,7 +549,7 @@
       catalogSelect.appendChild(opt);
       return;
     }
-    const emptyOpt = document.createElement('option'); emptyOpt.value = ''; emptyOpt.textContent = '— create new musical —';
+    const emptyOpt = document.createElement('option'); emptyOpt.value = ''; emptyOpt.textContent = '— choose a catalog musical —';
     catalogSelect.appendChild(emptyOpt);
     catalog.musicals.forEach(m => {
       const opt = document.createElement('option'); opt.value = m.id; opt.textContent = m.name;
@@ -530,33 +588,47 @@
     const profile = getActiveProfile();
     if(!profile) return alert('No active profile');
 
-    // If JSON pasted, import it directly into the active profile
-    const jsonTxt = musicalJsonArea ? musicalJsonArea.value.trim() : '';
-    if(jsonTxt){
-      try {
-        const parsed = JSON.parse(jsonTxt);
-        const musicalObj = parsed.musical || parsed;
-        const songsArr = parsed.songs || [];
-        addImportedMusicalToProfile(profile, musicalObj, songsArr);
-      } catch(err){
-        alert('Invalid musical JSON: ' + (err.message || err));
-        return;
-      }
-    } else {
-      // if catalog selected, clone it into profile
+    const admin = isAdminActive();
+
+    if(admin){
+      // Admin flow: add to catalog only (no cloning into Admin profile)
+      const jsonTxt = musicalJsonArea ? musicalJsonArea.value.trim() : '';
       const chosenCatalogId = catalogSelect ? catalogSelect.value : '';
-      if(chosenCatalogId){
+      if(jsonTxt){
+        // parse and add to catalog
         try {
-          addCatalogMusicalToProfile(profile, chosenCatalogId);
+          const parsed = JSON.parse(jsonTxt);
+          const musicalObj = parsed.musical || parsed || { name: parsed.name || parsed.title };
+          const songsArr = parsed.songs || [];
+          addCatalogMusical(musicalObj, songsArr);
+          alert('Added musical to catalog.');
         } catch(err){
-          alert('Failed to add catalog musical: ' + (err.message || err));
+          alert('Invalid musical JSON: ' + (err.message || err));
           return;
         }
+      } else if(chosenCatalogId){
+        // Admin selected an existing catalog item — nothing to add (it's already in catalog)
+        alert('That musical is already in the catalog. To add it to a profile, switch to the target profile and choose it from the catalog.');
       } else {
-        const name = qs('#musical-name').value.trim();
-        const color = qs('#musical-color').value;
+        // manual create -> add to catalog only
+        const name = musicalNameInput ? musicalNameInput.value.trim() : '';
+        const color = musicalColorInput ? musicalColorInput.value : '#999999';
         if(!name) return alert('Name required');
-        addMusical(profile, {name, color});
+        addCatalogMusical({ name, color }, []);
+        alert('Added musical to catalog.');
+      }
+    } else {
+      // Non-admin: only allow choosing from catalog and cloning into the active profile
+      const chosenCatalogId = catalogSelect ? catalogSelect.value : '';
+      if(!chosenCatalogId){
+        alert('Choose a catalog musical to add.');
+        return;
+      }
+      try {
+        addCatalogMusicalToProfile(profile, chosenCatalogId);
+      } catch(err){
+        alert('Failed to add catalog musical: ' + (err.message || err));
+        return;
       }
     }
 
