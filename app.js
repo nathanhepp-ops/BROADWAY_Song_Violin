@@ -1,4 +1,4 @@
-/* app.js (refactor + layout tweaks: expanded domain padding to fix clipping) */
+/* app.js (refactor + layout tweaks: domain padding & empty state alignment fixes) */
 
 (function () {
   /* -------------------------
@@ -281,7 +281,7 @@
   }
 
   function renderViolin(container, values, options = {}) {
-    const width = options.width || (container.clientWidth || 560);
+    const width = options.width || (container.clientWidth || 300);
     const height = options.height || (container.clientHeight || 260);
     container.innerHTML = '';
     const svg = d3.select(container).append('svg').attr('width', width).attr('height', height);
@@ -294,22 +294,63 @@
     // Domain expanded from [1, 5] to [0.4, 5.6] to allow Tier 5 and Tier 1 density curves to fit inside innerH
     const yScale = d3.scaleLinear().domain([0.4, 5.6]).range([innerH, 0]);
 
-    const density = buildDensity(values.filter(v => v !== null && v !== undefined).map(Number));
-    const maxDensity = d3.max(density, d => d[1]) || 1;
-    const xScale = d3.scaleLinear().domain([-maxDensity, maxDensity]).range([0, innerW]);
+    const validVals = values.filter(v => v !== null && v !== undefined && !isNaN(v)).map(Number);
+    
+    if (validVals.length > 0) {
+      const density = buildDensity(validVals);
+      const maxDensity = d3.max(density, d => d[1]) || 1;
+      const xScaleDensity = d3.scaleLinear().domain([-maxDensity, maxDensity]).range([0, innerW]);
 
-    const area = d3.area()
-      .curve(d3.curveCatmullRom)
-      .x0(d => xScale(-d[1]))
-      .x1(d => xScale(d[1]))
-      .y(d => yScale(d[0]));
+      const area = d3.area()
+        .curve(d3.curveCatmullRom)
+        .x0(d => xScaleDensity(-d[1]))
+        .x1(d => xScaleDensity(d[1]))
+        .y(d => yScale(d[0]));
 
-    g.append('path')
-      .datum(density)
-      .attr('d', area)
-      .attr('fill', options.fill || 'rgba(255,255,255,0.95)')
-      .attr('stroke', options.stroke || '#c9c4b8')
-      .attr('stroke-width', 1.2);
+      g.append('path')
+        .datum(density)
+        .attr('d', area)
+        .attr('fill', options.fill || 'rgba(255,255,255,0.95)')
+        .attr('stroke', options.stroke || '#c9c4b8')
+        .attr('stroke-width', 1.2);
+
+      if (options.dotData && options.dotData.length) {
+        const densArr = density;
+        function densityAt(y) {
+          for (let i = 0; i < densArr.length - 1; i++) {
+            const a = densArr[i][0], b = densArr[i + 1][0];
+            if (y >= a && y <= b) {
+              const fa = densArr[i][1], fb = densArr[i + 1][1];
+              const t = (y - a) / (b - a);
+              return fa + (fb - fa) * t;
+            }
+          }
+          const nearest = densArr.reduce((acc, d) => Math.abs(d[0] - y) < Math.abs(acc[0] - y) ? d : acc, densArr[0]);
+          return nearest ? nearest[1] : 0;
+        }
+
+        const maxJig = innerW * 0.45;
+        const maxDens = d3.max(density, d => d[1]) || 1;
+        const dots = g.selectAll('.dot').data(options.dotData, d => d.id);
+        const enter = dots.enter().append('circle').attr('r', 5).attr('stroke', '#2222').attr('opacity', 0.95);
+        enter.attr('cx', d => {
+          const dens = densityAt(d.y) || 0.001;
+          const maxX = maxDens ? (dens / maxDens) * maxJig : 1;
+          const r = (Math.random() * 2 - 1) * maxX;
+          return xScaleDensity(r);
+        }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#999').append('title').text(d => d.title);
+      }
+    } else {
+      // Render central baseline if no songs have assigned tiers
+      g.append('line')
+        .attr('x1', innerW / 2)
+        .attr('x2', innerW / 2)
+        .attr('y1', 0)
+        .attr('y2', innerH)
+        .attr('stroke', '#d6d0c2')
+        .attr('stroke-width', 1)
+        .attr('stroke-dasharray', '4 4');
+    }
 
     const tiers = [1, 2, 3, 4, 5];
     g.selectAll('.tier-line').data(tiers).enter()
@@ -321,33 +362,6 @@
     g.selectAll('.tier-label').data(tiers).enter()
       .append('text').attr('x', 4).attr('y', d => yScale(d) - 6).text(d => d)
       .attr('font-size', 11).attr('fill', '#777');
-
-    if (options.dotData && options.dotData.length) {
-      const densArr = density;
-      function densityAt(y) {
-        for (let i = 0; i < densArr.length - 1; i++) {
-          const a = densArr[i][0], b = densArr[i + 1][0];
-          if (y >= a && y <= b) {
-            const fa = densArr[i][1], fb = densArr[i + 1][1];
-            const t = (y - a) / (b - a);
-            return fa + (fb - fa) * t;
-          }
-        }
-        const nearest = densArr.reduce((acc, d) => Math.abs(d[0] - y) < Math.abs(acc[0] - y) ? d : acc, densArr[0]);
-        return nearest ? nearest[1] : 0;
-      }
-
-      const maxJig = innerW * 0.45;
-      const maxDens = d3.max(density, d => d[1]) || 1;
-      const dots = g.selectAll('.dot').data(options.dotData, d => d.id);
-      const enter = dots.enter().append('circle').attr('r', 5).attr('stroke', '#2222').attr('opacity', 0.95);
-      enter.attr('cx', d => {
-        const dens = densityAt(d.y) || 0.001;
-        const maxX = maxDens ? (dens / maxDens) * maxJig : 1;
-        const r = (Math.random() * 2 - 1) * maxX;
-        return xScale(r);
-      }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#999').append('title').text(d => d.title);
-    }
   }
 
   /* -------------------------
