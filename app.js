@@ -185,4 +185,351 @@
   const modalTitle = qs('#modal-title');
   const modalClose = qs('#modal-close');
   const overviewEl = qs('#overview-violin');
-  const musicalsList
+  const musicalsListEl = qs('#musicals-list');
+
+  // Modal helpers
+  function openModal(type){
+    modal.classList.remove('hidden');
+    modalType.value = type;
+    onModalTypeChange();
+    modalTitle.textContent = type === 'musical' ? 'Add Musical' : 'Add Song';
+    if(type === 'song') populateSongMusicals();
+  }
+  function closeModal(){ modal.classList.add('hidden'); modalForm.reset(); }
+
+  function onModalTypeChange(){
+    const val = modalType.value;
+    musicalFields.classList.toggle('hidden', val !== 'musical');
+    songFields.classList.toggle('hidden', val !== 'song');
+  }
+
+  // Profile UI functions
+  function refreshProfileSelect(){
+    const meta = loadMeta();
+    profileSelect.innerHTML = '';
+    meta.profiles.forEach(p => {
+      const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.name;
+      if(meta.activeProfileId === p.id) opt.selected = true;
+      profileSelect.appendChild(opt);
+    });
+  }
+
+  // Render everything for active profile
+  function renderAll(){
+    const profile = getActiveProfile();
+    if(!profile){
+      musicalsListEl.innerHTML = '<p>No profile selected</p>';
+      overviewEl.innerHTML = '';
+      return;
+    }
+    renderOverview(profile);
+    renderMusicalCards(profile);
+  }
+
+  // --- Violin rendering using D3 (dynamically loaded) ---
+  function loadD3And(fn){
+    if(window.d3) return fn();
+    const s = document.createElement('script');
+    s.src = 'https://d3js.org/d3.v7.min.js';
+    s.onload = fn;
+    s.onerror = fn; // continue even if CDN blocked (app will fail gracefully)
+    document.head.appendChild(s);
+  }
+
+  function buildDensity(values){
+    const yMin = 1, yMax = 5;
+    const samplePoints = d3.range(yMin, yMax + 1e-9, (yMax - yMin)/60);
+    const kde = kernelDensityEstimator(kernelEpanechnikov(0.35), samplePoints);
+    return kde(values);
+  }
+  function kernelDensityEstimator(kernel, X) {
+    return function(V) {
+      return X.map(function(x) {
+        return [x, d3.mean(V, function(v){ return kernel(x - v); }) || 0];
+      });
+    };
+  }
+  function kernelEpanechnikov(k) {
+    return function(v){
+      v = v / k;
+      return Math.abs(v) <= 1 ? 0.75 * (1 - v*v) / k : 0;
+    };
+  }
+
+  function renderViolin(container, values, options = {}){
+    const width = options.width || (container.clientWidth || 560);
+    const height = options.height || (container.clientHeight || 260);
+    container.innerHTML = '';
+    const svg = d3.select(container).append('svg').attr('width', width).attr('height', height);
+    const margin = {top:10,right:10,bottom:10,left:10};
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+    const yScale = d3.scaleLinear().domain([1,5]).range([innerH,0]);
+    const density = buildDensity(values.map(Number));
+    const maxDensity = d3.max(density, d => d[1]) || 1;
+    const xScale = d3.scaleLinear().domain([-maxDensity, maxDensity]).range([0, innerW]);
+
+    const area = d3.area()
+      .curve(d3.curveCatmullRom)
+      .x0(d => xScale(-d[1]))
+      .x1(d => xScale(d[1]))
+      .y(d => yScale(d[0]));
+
+    g.append('path')
+      .datum(density)
+      .attr('d', area)
+      .attr('fill', options.fill || 'rgba(255,255,255,0.95)')
+      .attr('stroke', options.stroke || '#c9c4b8')
+      .attr('stroke-width', 1.2);
+
+    // tier gridlines
+    const tiers = [1,2,3,4,5];
+    g.selectAll('.tier-line').data(tiers).enter()
+      .append('line')
+      .attr('x1',0).attr('x2',innerW)
+      .attr('y1',d=>yScale(d)).attr('y2',d=>yScale(d))
+      .attr('stroke','rgba(0,0,0,0.04)');
+
+    // density helper
+    const densArr = density;
+    function densityAt(y){
+      for(let i=0;i<densArr.length-1;i++){
+        const a = densArr[i][0], b = densArr[i+1][0];
+        if(y >= a && y <= b){
+          const fa = densArr[i][1], fb = densArr[i+1][1];
+          const t = (y - a) / (b - a);
+          return fa + (fb - fa) * t;
+        }
+      }
+      // fallback nearest
+      const nearest = densArr.reduce((acc,d)=> Math.abs(d[0]-y) < Math.abs(acc[0]-y) ? d : acc, densArr[0]);
+      return nearest ? nearest[1] : 0;
+    }
+
+    // dots
+    if(options.dotData && options.dotData.length){
+      const maxJig = innerW * 0.45;
+      const maxDens = d3.max(density, d => d[1]) || 1;
+      const dots = g.selectAll('.dot').data(options.dotData, d => d.id);
+      const enter = dots.enter().append('circle').attr('r', 5).attr('stroke', '#2222').attr('opacity', 0.95);
+      enter.attr('cx', d => {
+        const dens = densityAt(d.y) || 0.001;
+        const maxX = maxDens ? (dens / maxDens) * maxJig : 1;
+        const r = (Math.random()*2 - 1) * maxX;
+        return xScale(r);
+      }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#999').append('title').text(d => d.title);
+    }
+
+    // small tier labels
+    g.selectAll('.tier-label').data(tiers).enter()
+      .append('text').attr('x',4).attr('y',d=>yScale(d)-6).text(d=>d).attr('font-size',11).attr('fill','#777');
+  }
+
+  function makeDotData(profile, songs){
+    return songs.map(s => {
+      const m = profile.musicals.find(x => x.id === s.musicalId) || {color:'#999', name:'Unknown'};
+      return { id: s.id, title: `${s.title} — ${m.name}`, y: s.tier, color: m.color };
+    });
+  }
+
+  function renderOverview(profile){
+    const vals = profile.songs.map(s => s.tier);
+    loadD3And(() => {
+      renderViolin(overviewEl, vals, {
+        width: overviewEl.clientWidth || 900,
+        height: 260,
+        fill: 'rgba(247,243,236,0.95)',
+        stroke: '#d6d0c2',
+        dotData: makeDotData(profile, profile.songs)
+      });
+    });
+  }
+
+  function renderMusicalCards(profile){
+    musicalsListEl.innerHTML = '';
+    profile.musicals.forEach(m => {
+      const card = document.createElement('div'); card.className = 'card';
+      const header = document.createElement('div'); header.className = 'card-header';
+      const dot = document.createElement('div'); dot.className = 'color-dot'; dot.style.background = m.color;
+      const title = document.createElement('div'); title.innerHTML = `<strong>${m.name}</strong>`;
+      const actions = document.createElement('div'); actions.style.marginLeft='auto';
+      const btnView = document.createElement('button'); btnView.className = 'small-btn'; btnView.textContent = 'Expand';
+      const btnDelete = document.createElement('button'); btnDelete.className = 'small-btn'; btnDelete.textContent = 'Delete';
+      btnView.addEventListener('click', ()=> card.classList.toggle('expanded'));
+      btnDelete.addEventListener('click', ()=> {
+        if(!confirm(`Delete musical "${m.name}" and its songs?`)) return;
+        deleteMusicalAndSongs(profile, m.id);
+        renderAll();
+      });
+      actions.appendChild(btnView); actions.appendChild(btnDelete);
+      header.appendChild(dot); header.appendChild(title); header.appendChild(actions);
+      card.appendChild(header);
+
+      const violinWrap = document.createElement('div'); violinWrap.className = 'violin';
+      card.appendChild(violinWrap);
+
+      const songList = document.createElement('div'); songList.className = 'song-list';
+      const songsForM = profile.songs.filter(s => s.musicalId === m.id);
+      if(songsForM.length === 0){
+        const p = document.createElement('p'); p.style.color = '#777'; p.textContent = 'No songs yet';
+        songList.appendChild(p);
+      } else {
+        songsForM.forEach(s => {
+          const row = document.createElement('div'); row.className = 'song-row';
+          const left = document.createElement('div'); left.textContent = s.title;
+          const right = document.createElement('div');
+          const tier = document.createElement('select');
+          [1,2,3,4,5].forEach(t => {
+            const o = document.createElement('option'); o.value = t; o.textContent = t;
+            if(t === s.tier) o.selected = true;
+            tier.appendChild(o);
+          });
+          tier.addEventListener('change', (e) => {
+            s.tier = Number(e.target.value); saveProfile(profile); renderAll();
+          });
+          const del = document.createElement('button'); del.className = 'small-btn'; del.textContent = 'Delete';
+          del.addEventListener('click', ()=> {
+            if(!confirm('Delete song?')) return;
+            deleteSong(profile, s.id); renderAll();
+          });
+          right.appendChild(tier); right.appendChild(del);
+          row.appendChild(left); row.appendChild(right);
+          songList.appendChild(row);
+        });
+      }
+      card.appendChild(songList);
+
+      // attach violin
+      const vals = songsForM.map(s => s.tier);
+      loadD3And(() => {
+        renderViolin(violinWrap, vals, {
+          height: 140,
+          fill: 'rgba(255,255,255,0.96)',
+          stroke: '#e0dbcc',
+          dotData: makeDotData(profile, songsForM)
+        });
+      });
+
+      musicalsListEl.appendChild(card);
+    });
+  }
+
+  // --- Wiring events ---
+  btnNewProfile.addEventListener('click', () => {
+    const name = prompt('New profile name:','New Profile');
+    if(!name) return;
+    createProfile(name);
+    refreshProfileSelect();
+    renderAll();
+  });
+
+  btnDeleteProfile.addEventListener('click', () => {
+    const meta = loadMeta();
+    if(!meta.activeProfileId) return alert('No profile');
+    if(!confirm('Delete current profile? This will remove its data locally.')) return;
+    deleteProfile(meta.activeProfileId);
+    refreshProfileSelect();
+    renderAll();
+  });
+
+  profileSelect.addEventListener('change', (e) => {
+    setActiveProfile(e.target.value);
+    renderAll();
+  });
+
+  btnAddMusical.addEventListener('click', () => openModal('musical'));
+  btnAddSong.addEventListener('click', () => openModal('song'));
+  modalClose.addEventListener('click', closeModal);
+  modalType.addEventListener('change', onModalTypeChange);
+  modalForm.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const profile = getActiveProfile();
+    if(!profile) return alert('No active profile');
+    if(modalType.value === 'musical'){
+      const name = qs('#musical-name').value.trim();
+      const color = qs('#musical-color').value;
+      if(!name) return alert('Name required');
+      addMusical(profile, {name, color});
+    } else {
+      const title = qs('#song-title').value.trim();
+      const mid = qs('#song-musical').value;
+      const tier = Number(qs('#song-tier').value);
+      if(!title) return alert('Song title required');
+      addSong(profile, {title, musicalId: mid, tier});
+    }
+    closeModal();
+    renderAll();
+  });
+
+  function populateSongMusicals(){
+    const profile = getActiveProfile();
+    songMusicalSelect.innerHTML = '';
+    if(!profile) return;
+    // finish populateSongMusicals
+    profile.musicals.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.id;
+      opt.textContent = m.name;
+      songMusicalSelect.appendChild(opt);
+    });
+    if(profile.musicals.length === 0){
+      const opt = document.createElement('option');
+      opt.value = '';
+      opt.textContent = '— no musicals —';
+      songMusicalSelect.appendChild(opt);
+    }
+  }
+
+  // Export / Import wiring
+  btnExport.addEventListener('click', () => {
+    const profile = getActiveProfile();
+    if(!profile) return alert('No profile to export');
+    exportProfile(profile);
+  });
+
+  btnImport.addEventListener('click', () => importFileInput.click());
+
+  importFileInput.addEventListener('change', async (e) => {
+    const f = e.target.files[0];
+    if(!f) return;
+    try {
+      const txt = await f.text();
+      const parsed = importProfileJson(txt);
+      refreshProfileSelect();
+      renderAll();
+      alert('Imported profile: ' + parsed.name);
+    } catch(err){
+      alert('Import failed: ' + (err.message || err));
+    } finally {
+      importFileInput.value = '';
+    }
+  });
+
+  // storage event: update UI when other tab changes data
+  window.addEventListener('storage', (e) => {
+    if(!e.key) return;
+    if(e.key === META_KEY || e.key.startsWith(PROFILE_KEY_PREFIX) || e.key === null){
+      refreshProfileSelect();
+      renderAll();
+    }
+  });
+
+  // register service worker (best-effort)
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log('Service Worker registered'))
+      .catch(err => console.warn('Service Worker registration failed', err));
+  }
+
+  // init UI
+  refreshProfileSelect();
+  renderAll();
+
+  // expose for debugging
+  window.bsv = {
+    loadMeta, saveMeta, listProfiles, createProfile, deleteProfile,
+    getActiveProfile, saveProfile, addMusical, addSong, editSong, deleteSong, renderAll
+  };
+
+})();
