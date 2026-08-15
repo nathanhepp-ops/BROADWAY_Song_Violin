@@ -1,4 +1,4 @@
-/* app.js (refactor + layout tweaks: increased violin heights and top margin) */
+/* app.js (refactor + layout tweaks: expanded domain padding to fix clipping) */
 
 (function () {
   /* -------------------------
@@ -249,7 +249,6 @@
 
   /* -------------------------
      D3 violin rendering (lazy load)
-     - Increased top margin to avoid clipping
      ------------------------- */
   function loadD3And(fn) {
     if (window.d3) return fn();
@@ -274,7 +273,8 @@
     };
   }
   function buildDensity(values) {
-    const yMin = 1, yMax = 5;
+    // Extended sampling range beyond 1-5 so KDE smoothing can fully taper off
+    const yMin = 0.4, yMax = 5.6;
     const samplePoints = d3.range(yMin, yMax + 1e-9, (yMax - yMin) / 60);
     const kde = kernelDensityEstimator(kernelEpanechnikov(0.35), samplePoints);
     return kde(values);
@@ -282,16 +282,17 @@
 
   function renderViolin(container, values, options = {}) {
     const width = options.width || (container.clientWidth || 560);
-    // default height increased; callers may override
     const height = options.height || (container.clientHeight || 260);
     container.innerHTML = '';
     const svg = d3.select(container).append('svg').attr('width', width).attr('height', height);
-    // increase top margin to avoid clipping the top of the shape
-    const margin = { top: 48, right: 10, bottom: 10, left: 10 };
+    
+    const margin = { top: 20, right: 10, bottom: 20, left: 10 };
     const innerW = width - margin.left - margin.right;
     const innerH = height - margin.top - margin.bottom;
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-    const yScale = d3.scaleLinear().domain([1, 5]).range([innerH, 0]);
+    
+    // Domain expanded from [1, 5] to [0.4, 5.6] to allow Tier 5 and Tier 1 density curves to fit inside innerH
+    const yScale = d3.scaleLinear().domain([0.4, 5.6]).range([innerH, 0]);
 
     const density = buildDensity(values.filter(v => v !== null && v !== undefined).map(Number));
     const maxDensity = d3.max(density, d => d[1]) || 1;
@@ -423,7 +424,7 @@
     loadD3And(() => {
       renderViolin(overviewEl, vals, {
         width: overviewEl.clientWidth || 900,
-        height: 440, // increased to give more vertical space
+        height: 440,
         fill: 'rgba(247,243,236,0.95)',
         stroke: '#d6d0c2',
         dotData: makeDotData(profile, profile.songs)
@@ -477,7 +478,6 @@
             saveProfile(profile);
             renderAll();
           });
-          // per-song delete removed
           right.appendChild(tier);
           row.appendChild(left); row.appendChild(right);
           songList.appendChild(row);
@@ -485,7 +485,7 @@
       }
       card.appendChild(songList);
 
-      // attach per-musical violin (increased height)
+      // attach per-musical violin
       const vals = songsForM.map(s => s.tier);
       loadD3And(() => {
         renderViolin(violinWrap, vals, { height: 300, fill: 'rgba(255,255,255,0.96)', stroke: '#e0dbcc', dotData: makeDotData(profile, songsForM) });
