@@ -7,12 +7,19 @@
   <meta name="theme-color" content="#f7f3ec" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* small modal catalog list styles */
+    .catalog-list { max-height: 260px; overflow:auto; border:1px solid rgba(0,0,0,0.06); padding:6px; border-radius:6px; background: #fff; }
+    .catalog-item { padding:8px 10px; border-radius:6px; margin:4px 0; display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .catalog-item:hover, .catalog-item:focus { background: rgba(0,0,0,0.02); outline: none; }
+    .catalog-dot { width:12px; height:12px; border-radius:3px; flex:0 0 12px; }
+    .catalog-empty { color:#666; padding:8px; }
+  </style>
 </head>
 <body>
   <header class="topbar">
     <h1>BROADWAY Song Violin</h1>
     <div class="controls">
-      <!-- Profile controls: select and simple actions -->
       <label style="margin-right:8px;">
         Profile:
         <select id="profile-select" title="Choose profile"></select>
@@ -20,8 +27,6 @@
       <button id="btn-new-profile" class="small-btn">New Profile</button>
       <button id="btn-delete-profile" class="small-btn">Delete Profile</button>
       <button id="btn-clear-all" class="small-btn" style="display:none">Clear All</button>
-
-      <!-- only add musical button kept -->
       <button id="btn-add-musical">+ Musical</button>
     </div>
   </header>
@@ -33,11 +38,10 @@
     </section>
 
     <section class="musicals" id="musicals-list">
-      <!-- musical cards injected here -->
     </section>
   </main>
 
-  <!-- modal placeholder (musical-only) -->
+  <!-- modal (musical-only) -->
   <div id="modal" class="modal hidden">
     <div class="modal-inner">
       <button class="modal-close" id="modal-close">✕</button>
@@ -47,11 +51,15 @@
           <label id="label-musical-name">Musical name: <input id="musical-name" required></label>
           <label id="label-musical-color">Color: <input id="musical-color" type="color" value="#ff7043"></label>
 
-          <!-- catalog select inserted dynamically by JS when available -->
+          <!-- catalog list (scrollable) -->
+          <div style="margin-top:8px">
+            <div style="margin-bottom:6px;font-weight:600">Available musicals</div>
+            <div id="catalog-list" class="catalog-list" aria-live="polite"></div>
+          </div>
 
-          <!-- paste musical JSON to create musical + songs in the shared catalog (Admin only) -->
-          <label id="label-musical-json" style="margin-top:8px">Paste musical JSON (Admin only):<br>
-            <textarea id="musical-json" rows="6" placeholder='{"type":"musical","musical":{...},"songs":[...]}'></textarea>
+          <!-- paste musical JSON (Admin only) -->
+          <label id="label-musical-json" style="margin-top:8px;display:block">Paste musical JSON (Admin only):<br>
+            <textarea id="musical-json" rows="6" placeholder='{"type":"musical","musical":{...},"songs":[...]}' style="width:100%;box-sizing:border-box;font-family:monospace;font-size:0.9rem"></textarea>
           </label>
 
           <label id="label-save-to-catalog" style="display:block;margin-top:6px">
@@ -60,6 +68,7 @@
 
           <div id="catalog-empty-msg" style="color:#666;margin-top:6px;display:none">No catalog items available.</div>
         </div>
+
         <div class="modal-actions">
           <button type="submit" id="modal-save">Save</button>
         </div>
@@ -71,7 +80,6 @@
     <small>Local-only PWA. Data saved in browser storage (no cloud).</small>
   </footer>
 
-  <!-- app script -->
   <script src="app.js"></script>
 </body>
 </html>
