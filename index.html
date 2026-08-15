@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BROADWAY Song Violin</title>
+  <meta name="theme-color" content="#f7f3ec" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>BROADWAY Song Violin</h1>
+    <div class="controls">
+      <!-- Profile controls: select and simple actions -->
+      <label style="margin-right:8px;">
+        Profile:
+        <select id="profile-select" title="Choose profile"></select>
+      </label>
+      <button id="btn-new-profile" class="small-btn">New Profile</button>
+      <button id="btn-delete-profile" class="small-btn">Delete Profile</button>
+
+      <!-- existing action buttons -->
+      <button id="btn-add-musical">+ Musical</button>
+      <button id="btn-add-song">+ Song</button>
+      <button id="btn-export">Export</button>
+      <button id="btn-import">Import</button>
+      <input id="import-file" type="file" accept="application/json" style="display:none" />
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="overview">
+      <h2>Overview</h2>
+      <div id="overview-violin" class="violin-wrap"></div>
+    </section>
+
+    <section class="musicals" id="musicals-list">
+      <!-- musical cards injected here -->
+    </section>
+  </main>
+
+  <!-- modal placeholder (we'll wire this up next) -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-inner">
+      <button class="modal-close" id="modal-close">✕</button>
+      <form id="modal-form">
+        <h3 id="modal-title">Add</h3>
+        <label>Type:
+          <select id="modal-type"><option value="musical">Musical</option><option value="song">Song</option></select>
+        </label>
+        <div id="musical-fields">
+          <label>Musical name: <input id="musical-name" required></label>
+          <label>Color: <input id="musical-color" type="color" value="#ff7043"></label>
+        </div>
+        <div id="song-fields" class="hidden">
+          <label>Song title: <input id="song-title" required></label>
+          <label>Musical:
+            <select id="song-musical"></select>
+          </label>
+          <label>Tier: <input id="song-tier" type="number" min="1" max="5" value="3"></label>
+        </div>
+        <div class="modal-actions">
+          <button type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <small>Local-only PWA. Data saved in browser storage (no cloud).</small>
+  </footer>
+
+  <!-- app script will be added next -->
+  <script src="/app.js"></script>
+</body>
+</html>
