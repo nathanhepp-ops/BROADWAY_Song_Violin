@@ -1,11 +1,7 @@
-/* app.js (refactored single-file)
-   - Single-file app kept for simple deployment (no build step)
-   - Internally modularized with clear sections and comments
-   - Behavior preserved except where changed per request:
-     * Start with Admin only
-     * No per-song delete button
-     * Admin always saves to catalog (no checkbox)
-     * Footer text removed
+/* app.js (refactor + layout tweaks)
+   - Increased overview violin height and per-musical height to avoid clipping
+   - Added extra top margin in violin renderer
+   - Let song lists expand and let page scroll
 */
 
 (function () {
@@ -257,6 +253,7 @@
 
   /* -------------------------
      D3 violin rendering (lazy load)
+     - Increased top margin to avoid clipping
      ------------------------- */
   function loadD3And(fn) {
     if (window.d3) return fn();
@@ -289,10 +286,12 @@
 
   function renderViolin(container, values, options = {}) {
     const width = options.width || (container.clientWidth || 560);
+    // default height increased; callers may override
     const height = options.height || (container.clientHeight || 260);
     container.innerHTML = '';
     const svg = d3.select(container).append('svg').attr('width', width).attr('height', height);
-    const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+    // increase top margin to avoid clipping the top of the shape
+    const margin = { top: 20, right: 10, bottom: 10, left: 10 };
     const innerW = width - margin.left - margin.right;
     const innerH = height - margin.top - margin.bottom;
     const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
@@ -428,7 +427,7 @@
     loadD3And(() => {
       renderViolin(overviewEl, vals, {
         width: overviewEl.clientWidth || 900,
-        height: 260,
+        height: 340, // increased to give more vertical space
         fill: 'rgba(247,243,236,0.95)',
         stroke: '#d6d0c2',
         dotData: makeDotData(profile, profile.songs)
@@ -482,7 +481,7 @@
             saveProfile(profile);
             renderAll();
           });
-          // NOTE: per-song Delete button removed per request
+          // per-song delete removed
           right.appendChild(tier);
           row.appendChild(left); row.appendChild(right);
           songList.appendChild(row);
@@ -490,10 +489,10 @@
       }
       card.appendChild(songList);
 
-      // attach per-musical violin
+      // attach per-musical violin (increased height)
       const vals = songsForM.map(s => s.tier);
       loadD3And(() => {
-        renderViolin(violinWrap, vals, { height: 140, fill: 'rgba(255,255,255,0.96)', stroke: '#e0dbcc', dotData: makeDotData(profile, songsForM) });
+        renderViolin(violinWrap, vals, { height: 220, fill: 'rgba(255,255,255,0.96)', stroke: '#e0dbcc', dotData: makeDotData(profile, songsForM) });
       });
 
       musicalsListEl.appendChild(card);
