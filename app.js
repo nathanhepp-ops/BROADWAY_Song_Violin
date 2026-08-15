@@ -2,14 +2,40 @@
 
 (function () {
   /* -------------------------
-     Constants & UI State
+     Constants & Storage Keys
      ------------------------- */
   const META_KEY = 'bsv:meta';
   const PROFILE_KEY_PREFIX = 'bsv:profile:';
   const CATALOG_KEY = 'bsv:catalog';
+  const EXPANDED_CARDS_KEY = 'bsv:expanded_cards';
 
-  // Persist expanded card state across re-renders
-  const expandedCardIds = new Set();
+  /* -------------------------
+     Expanded State Persistence
+     ------------------------- */
+  function getExpandedCardIds() {
+    try {
+      const raw = localStorage.getItem(EXPANDED_CARDS_KEY);
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch (e) {
+      return new Set();
+    }
+  }
+
+  function saveExpandedCardIds(set) {
+    try {
+      localStorage.setItem(EXPANDED_CARDS_KEY, JSON.stringify(Array.from(set)));
+    } catch (e) { /* ignore */ }
+  }
+
+  function setCardExpanded(cardId, isExpanded) {
+    const set = getExpandedCardIds();
+    if (isExpanded) {
+      set.add(cardId);
+    } else {
+      set.delete(cardId);
+    }
+    saveExpandedCardIds(set);
+  }
 
   /* -------------------------
      Small utilities
@@ -183,7 +209,7 @@
   function deleteMusicalAndSongs(profile, musicalId) {
     profile.songs = profile.songs.filter(s => s.musicalId !== musicalId);
     profile.musicals = profile.musicals.filter(m => m.id !== musicalId);
-    expandedCardIds.delete(musicalId);
+    setCardExpanded(musicalId, false);
     saveProfile(profile);
   }
 
@@ -443,12 +469,13 @@
 
   function renderMusicalCards(profile) {
     musicalsListEl.innerHTML = '';
+    const expandedSet = getExpandedCardIds();
+
     (profile.musicals || []).forEach(m => {
       const card = document.createElement('div'); 
       card.className = 'card';
       
-      // Preserve expanded state
-      const isExpanded = expandedCardIds.has(m.id);
+      const isExpanded = expandedSet.has(m.id);
       if (isExpanded) {
         card.classList.add('expanded');
       }
@@ -463,14 +490,12 @@
       const btnDelete = document.createElement('button'); btnDelete.className = 'small-btn'; btnDelete.textContent = 'Delete';
       
       btnView.addEventListener('click', () => {
-        const currentlyExpanded = card.classList.toggle('expanded');
-        if (currentlyExpanded) {
-          expandedCardIds.add(m.id);
-          btnView.textContent = 'Collapse';
-        } else {
-          expandedCardIds.delete(m.id);
-          btnView.textContent = 'Expand';
-        }
+        const currentlyExpanded = card.classList.contains('expanded');
+        const nextExpandedState = !currentlyExpanded;
+        
+        card.classList.toggle('expanded', nextExpandedState);
+        setCardExpanded(m.id, nextExpandedState);
+        btnView.textContent = nextExpandedState ? 'Collapse' : 'Expand';
       });
 
       btnDelete.addEventListener('click', () => {
@@ -545,7 +570,6 @@
 
     const modalTitle = qs('#modal h2') || qs('#modal h3') || qs('.modal-title');
 
-    // Get parent wrappers or labels associated with inputs
     const jsonLabel = musicalJsonArea ? musicalJsonArea.parentElement : null;
     const nameLabel = musicalNameInput ? musicalNameInput.parentElement : null;
 
@@ -557,7 +581,6 @@
       if (modalTitle) modalTitle.textContent = 'Add Musical';
       modalSaveBtn.disabled = false;
     } else {
-      // Hide all admin creation controls for non-admin
       if (nameLabel) nameLabel.style.display = 'none';
       if (jsonLabel) jsonLabel.style.display = 'none';
       if (modalSaveBtn) modalSaveBtn.style.display = 'none';
@@ -589,7 +612,9 @@
     if (!isAdminActive()) return alert('Only Admin can clear data.');
     if (!confirm('Delete ALL profiles and catalog data from this browser? This cannot be undone.')) return;
     Object.keys(localStorage).forEach(k => {
-      if (k === META_KEY || k === CATALOG_KEY || k.startsWith(PROFILE_KEY_PREFIX)) localStorage.removeItem(k);
+      if (k === META_KEY || k === CATALOG_KEY || k.startsWith(PROFILE_KEY_PREFIX) || k === EXPANDED_CARDS_KEY) {
+        localStorage.removeItem(k);
+      }
     });
     initMeta();
     initCatalog();
