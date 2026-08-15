@@ -1,12 +1,15 @@
-/* app.js (refactor + layout tweaks: domain padding & height fixes) */
+/* app.js */
 
 (function () {
   /* -------------------------
-     Constants
+     Constants & UI State
      ------------------------- */
   const META_KEY = 'bsv:meta';
   const PROFILE_KEY_PREFIX = 'bsv:profile:';
   const CATALOG_KEY = 'bsv:catalog';
+
+  // Persist expanded card state across re-renders
+  const expandedCardIds = new Set();
 
   /* -------------------------
      Small utilities
@@ -180,6 +183,7 @@
   function deleteMusicalAndSongs(profile, musicalId) {
     profile.songs = profile.songs.filter(s => s.musicalId !== musicalId);
     profile.musicals = profile.musicals.filter(m => m.id !== musicalId);
+    expandedCardIds.delete(musicalId);
     saveProfile(profile);
   }
 
@@ -440,17 +444,33 @@
   function renderMusicalCards(profile) {
     musicalsListEl.innerHTML = '';
     (profile.musicals || []).forEach(m => {
-      const card = document.createElement('div'); card.className = 'card';
+      const card = document.createElement('div'); 
+      card.className = 'card';
+      
+      // Preserve expanded state
+      const isExpanded = expandedCardIds.has(m.id);
+      if (isExpanded) {
+        card.classList.add('expanded');
+      }
+
       const header = document.createElement('div'); header.className = 'card-header';
       const dot = document.createElement('div'); dot.className = 'color-dot'; dot.style.background = m.color;
       const title = document.createElement('div'); title.innerHTML = `<strong>${m.name}</strong>`;
       const actions = document.createElement('div'); actions.style.marginLeft = 'auto';
-      const btnView = document.createElement('button'); btnView.className = 'small-btn'; btnView.textContent = 'Expand';
+      const btnView = document.createElement('button'); btnView.className = 'small-btn'; 
+      btnView.textContent = isExpanded ? 'Collapse' : 'Expand';
+      
       const btnDelete = document.createElement('button'); btnDelete.className = 'small-btn'; btnDelete.textContent = 'Delete';
       
       btnView.addEventListener('click', () => {
-        card.classList.toggle('expanded');
-        btnView.textContent = card.classList.contains('expanded') ? 'Collapse' : 'Expand';
+        const currentlyExpanded = card.classList.toggle('expanded');
+        if (currentlyExpanded) {
+          expandedCardIds.add(m.id);
+          btnView.textContent = 'Collapse';
+        } else {
+          expandedCardIds.delete(m.id);
+          btnView.textContent = 'Expand';
+        }
       });
 
       btnDelete.addEventListener('click', () => {
@@ -495,7 +515,6 @@
       }
       card.appendChild(songList);
 
-      // Height set to 220 to match card CSS bounds cleanly
       const vals = songsForM.map(s => s.tier);
       loadD3And(() => {
         renderViolin(violinWrap, vals, { 
@@ -524,26 +543,31 @@
 
     populateCatalogList();
 
+    const modalTitle = qs('#modal h2') || qs('#modal h3') || qs('.modal-title');
+
+    // Get parent wrappers or labels associated with inputs
+    const jsonLabel = musicalJsonArea ? musicalJsonArea.parentElement : null;
+    const nameLabel = musicalNameInput ? musicalNameInput.parentElement : null;
+
     if (admin) {
-      if (musicalNameInput) musicalNameInput.parentElement.style.display = '';
-      if (musicalColorInput) musicalColorInput.parentElement.style.display = '';
-      if (musicalJsonArea) musicalJsonArea.parentElement.style.display = '';
+      if (nameLabel) nameLabel.style.display = '';
+      if (jsonLabel) jsonLabel.style.display = '';
       if (catalogEmptyMsg) catalogEmptyMsg.style.display = 'none';
       if (modalSaveBtn) modalSaveBtn.style.display = '';
+      if (modalTitle) modalTitle.textContent = 'Add Musical';
       modalSaveBtn.disabled = false;
     } else {
-      if (musicalNameInput) musicalNameInput.parentElement.style.display = 'none';
-      if (musicalColorInput) musicalColorInput.parentElement.style.display = 'none';
-      if (musicalJsonArea) musicalJsonArea.parentElement.style.display = 'none';
+      // Hide all admin creation controls for non-admin
+      if (nameLabel) nameLabel.style.display = 'none';
+      if (jsonLabel) jsonLabel.style.display = 'none';
+      if (modalSaveBtn) modalSaveBtn.style.display = 'none';
+      if (modalTitle) modalTitle.textContent = 'Select a Musical';
+
       const catalog = loadCatalog();
       if (!catalog || !catalog.musicals.length) {
         catalogEmptyMsg.style.display = '';
-        if (modalSaveBtn) modalSaveBtn.style.display = '';
-        modalSaveBtn.disabled = true;
       } else {
         catalogEmptyMsg.style.display = 'none';
-        if (modalSaveBtn) modalSaveBtn.style.display = 'none';
-        modalSaveBtn.disabled = false;
       }
     }
 
