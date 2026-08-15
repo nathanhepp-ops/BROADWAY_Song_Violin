@@ -43,17 +43,24 @@
       <form id="modal-form">
         <h3 id="modal-title">Add Musical</h3>
         <div id="musical-fields">
-          <label>Musical name: <input id="musical-name" required></label>
-          <label>Color: <input id="musical-color" type="color" value="#ff7043"></label>
+          <label id="label-musical-name">Musical name: <input id="musical-name" required></label>
+          <label id="label-musical-color">Color: <input id="musical-color" type="color" value="#ff7043"></label>
 
           <!-- catalog select inserted dynamically by JS when available -->
+
           <!-- paste musical JSON to create musical + songs in the active profile -->
-          <label style="margin-top:8px">Paste musical JSON (optional):<br>
+          <label id="label-musical-json" style="margin-top:8px">Paste musical JSON (Admin only):<br>
             <textarea id="musical-json" rows="6" placeholder='{"type":"musical","musical":{...},"songs":[...]}'></textarea>
           </label>
+
+          <label id="label-save-to-catalog" style="display:block;margin-top:6px">
+            <input type="checkbox" id="save-to-catalog" checked> Save to catalog (Admin only)
+          </label>
+
+          <div id="catalog-empty-msg" style="color:#666;margin-top:6px;display:none">No catalog items available.</div>
         </div>
         <div class="modal-actions">
-          <button type="submit">Save</button>
+          <button type="submit" id="modal-save">Save</button>
         </div>
       </form>
     </div>
