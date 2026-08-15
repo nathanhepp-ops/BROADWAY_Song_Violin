@@ -164,22 +164,6 @@
     return m;
   }
 
-  // Import a musical JSON string into catalog
-  // Accepts:
-  // { type: "musical", musical: {...}, songs: [...] }
-  // or { musical: {...}, songs: [...] }
-  function importMusicalJson(jsonStr){
-    try {
-      const parsed = JSON.parse(jsonStr);
-      const musical = parsed.musical || parsed;
-      const songs = parsed.songs || parsed.songs || [];
-      if(!musical || !musical.name) throw new Error('No musical found in import');
-      return addCatalogMusical(musical, songs);
-    } catch(e){
-      throw e;
-    }
-  }
-
   // --- App logic for musicals & songs (operate on active profile) ---
   function addMusical(profile, {name, color}){
     const m = { id: idGen('m'), name: name || 'New Musical', color: color || '#999999', createdAt: nowISO(), updatedAt: nowISO() };
@@ -205,7 +189,7 @@
     Object.assign(s, updates); s.updatedAt = nowISO(); saveProfile(profile); return s;
   }
   function deleteSong(profile, id){
-    profile.songs = profile.songs.filter(x => x.id !== id); saveProfile(profile);
+    profile.songs = profile.songs.filter(x => x.id === id); saveProfile(profile);
   }
 
   // Clone a catalog musical (and its songs) into a profile (generates new ids)
@@ -244,24 +228,12 @@
         musicalId: newMid,
         tier: Math.max(1,Math.min(5, Number(s.tier) || 3)),
         createdAt: s.createdAt || nowISO(),
-        updatedAt: nowISO()
+        updatedAt: s.updatedAt || nowISO()
       };
       profile.songs.push(ns);
     });
     saveProfile(profile);
     return newMusical;
-  }
-
-  // --- Export/import helpers (profile-level) - export kept for backups only ---
-  function exportProfile(profile){
-    const name = (profile && profile.name) ? profile.name.replace(/\s+/g,'_') : 'profile';
-    const blob = new Blob([JSON.stringify(profile, null, 2)], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `broadway-profile-${name}-${(new Date()).toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
   }
 
   // --- DOM wiring & rendering ---
@@ -270,43 +242,25 @@
   const btnNewProfile = qs('#btn-new-profile');
   const btnDeleteProfile = qs('#btn-delete-profile');
   const btnAddMusical = qs('#btn-add-musical');
-  const btnAddSong = qs('#btn-add-song');
-  const btnExport = qs('#btn-export');
-  const btnImport = qs('#btn-import');
-  const importFileInput = qs('#import-file');
   const modal = qs('#modal');
-  const modalType = qs('#modal-type');
-  const musicalFields = qs('#musical-fields');
-  const songFields = qs('#song-fields');
-  // we'll add a catalog select and JSON textarea in musicalFields
-  let catalogSelect = null;
-  let musicalJsonArea = null;
-  const songMusicalSelect = qs('#song-musical');
   const modalForm = qs('#modal-form');
-  const modalTitle = qs('#modal-title');
   const modalClose = qs('#modal-close');
   const overviewEl = qs('#overview-violin');
   const musicalsListEl = qs('#musicals-list');
 
+  // musical modal elements (some inserted dynamically)
+  const musicalFields = qs('#musical-fields');
+  let catalogSelect = null;
+  let musicalJsonArea = qs('#musical-json');
+
   // Modal helpers
-  function openModal(type){
+  function openModal(){
     modal.classList.remove('hidden');
-    modalType.value = type;
-    onModalTypeChange();
-    modalTitle.textContent = type === 'musical' ? 'Add Musical' : 'Add Song';
-    if(type === 'song') populateSongMusicals();
-    if(type === 'musical') {
-      populateCatalogSelect();
-      populateMusicalJsonArea();
-    }
+    modalTitle && (modalTitle.textContent = 'Add Musical');
+    populateCatalogSelect();
+    if(musicalJsonArea) musicalJsonArea.value = '';
   }
   function closeModal(){ modal.classList.add('hidden'); modalForm.reset(); if(musicalJsonArea) musicalJsonArea.value = ''; }
-
-  function onModalTypeChange(){
-    const val = modalType.value;
-    musicalFields.classList.toggle('hidden', val !== 'musical');
-    songFields.classList.toggle('hidden', val !== 'song');
-  }
 
   // Profile UI functions
   function refreshProfileSelect(){
@@ -520,21 +474,7 @@
     });
   }
 
-  // --- UI helpers (catalog select, song musicals, JSON area) ---
-  function populateSongMusicals(){
-    const profile = getActiveProfile();
-    songMusicalSelect.innerHTML = '';
-    if(!profile) return;
-    profile.musicals.forEach(m => {
-      const opt = document.createElement('option'); opt.value = m.id; opt.textContent = m.name;
-      songMusicalSelect.appendChild(opt);
-    });
-    if(profile.musicals.length === 0){
-      const opt = document.createElement('option'); opt.value = ''; opt.textContent = '— no musicals —';
-      songMusicalSelect.appendChild(opt);
-    }
-  }
-
+  // --- UI helpers (catalog select) ---
   function populateCatalogSelect(){
     if(!catalogSelect){
       // create and insert a catalog select into musicalFields
@@ -557,21 +497,6 @@
       const opt = document.createElement('option'); opt.value = m.id; opt.textContent = m.name;
       catalogSelect.appendChild(opt);
     });
-  }
-
-  function populateMusicalJsonArea(){
-    if(!musicalJsonArea){
-      const wrap = document.createElement('div');
-      wrap.style.marginTop = '8px';
-      wrap.innerHTML = `<label>Paste musical JSON (optional):<br><textarea id="musical-json" rows="6" placeholder='{"type":"musical","musical":{...},"songs":[...]}'></textarea></label>`;
-      musicalFields.appendChild(wrap);
-      musicalJsonArea = qs('#musical-json');
-      musicalJsonArea.style.width = '100%';
-      musicalJsonArea.style.boxSizing = 'border-box';
-      musicalJsonArea.style.fontFamily = 'monospace';
-      musicalJsonArea.style.fontSize = '0.85rem';
-    }
-    musicalJsonArea.value = '';
   }
 
   // --- Wiring events ---
@@ -597,104 +522,46 @@
     renderAll();
   });
 
-  btnAddMusical.addEventListener('click', () => openModal('musical'));
-  btnAddSong.addEventListener('click', () => openModal('song'));
+  btnAddMusical.addEventListener('click', () => openModal());
   modalClose.addEventListener('click', closeModal);
-  modalType.addEventListener('change', onModalTypeChange);
+
   modalForm.addEventListener('submit', (ev) => {
     ev.preventDefault();
     const profile = getActiveProfile();
     if(!profile) return alert('No active profile');
-    if(modalType.value === 'musical'){
-      // If JSON pasted, import it directly into the active profile
-      const jsonTxt = musicalJsonArea ? musicalJsonArea.value.trim() : '';
-      if(jsonTxt){
+
+    // If JSON pasted, import it directly into the active profile
+    const jsonTxt = musicalJsonArea ? musicalJsonArea.value.trim() : '';
+    if(jsonTxt){
+      try {
+        const parsed = JSON.parse(jsonTxt);
+        const musicalObj = parsed.musical || parsed;
+        const songsArr = parsed.songs || [];
+        addImportedMusicalToProfile(profile, musicalObj, songsArr);
+      } catch(err){
+        alert('Invalid musical JSON: ' + (err.message || err));
+        return;
+      }
+    } else {
+      // if catalog selected, clone it into profile
+      const chosenCatalogId = catalogSelect ? catalogSelect.value : '';
+      if(chosenCatalogId){
         try {
-          const parsed = JSON.parse(jsonTxt);
-          // accept parsed.musical + parsed.songs OR parsed with name + songs OR flattened
-          const musicalObj = parsed.musical || parsed;
-          const songsArr = parsed.songs || [];
-          addImportedMusicalToProfile(profile, musicalObj, songsArr);
+          addCatalogMusicalToProfile(profile, chosenCatalogId);
         } catch(err){
-          alert('Invalid musical JSON: ' + (err.message || err));
+          alert('Failed to add catalog musical: ' + (err.message || err));
           return;
         }
       } else {
-        // if catalog selected, clone it into profile
-        const chosenCatalogId = catalogSelect ? catalogSelect.value : '';
-        if(chosenCatalogId){
-          try {
-            addCatalogMusicalToProfile(profile, chosenCatalogId);
-          } catch(err){
-            alert('Failed to add catalog musical: ' + (err.message || err));
-            return;
-          }
-        } else {
-          const name = qs('#musical-name').value.trim();
-          const color = qs('#musical-color').value;
-          if(!name) return alert('Name required');
-          addMusical(profile, {name, color});
-        }
+        const name = qs('#musical-name').value.trim();
+        const color = qs('#musical-color').value;
+        if(!name) return alert('Name required');
+        addMusical(profile, {name, color});
       }
-    } else {
-      const title = qs('#song-title').value.trim();
-      const mid = qs('#song-musical').value;
-      const tier = Number(qs('#song-tier').value);
-      if(!title) return alert('Song title required');
-      addSong(profile, {title, musicalId: mid, tier});
     }
+
     closeModal();
     renderAll();
-  });
-
-  // Import / Export wiring
-  btnExport.addEventListener('click', () => {
-    const profile = getActiveProfile();
-    if(!profile) return alert('No profile to export');
-    exportProfile(profile);
-  });
-
-  btnImport.addEventListener('click', () => importFileInput.click());
-
-  importFileInput.addEventListener('change', async (e) => {
-    const f = e.target.files[0];
-    if(!f) return;
-    try {
-      const txt = await f.text();
-      const parsed = JSON.parse(txt);
-      // detect musical import (has musical + songs or type: musical)
-      const isMusical = parsed.type === 'musical' || parsed.musical || (parsed.name && parsed.songs);
-      const active = getActiveProfile();
-      if(isMusical){
-        // require Admin profile to add to catalog
-        if(!active || active.name !== 'Admin'){
-          alert('To import a single musical into the shared catalog, switch to the "Admin" profile and try again.');
-        } else {
-          importMusicalJson(txt);
-          alert('Imported musical into catalog.');
-        }
-      } else if(parsed && parsed.id && parsed.name && (parsed.musicals || parsed.songs)){
-        // fallback: full profile import - create a new profile (keeps backwards compatibility)
-        // if id collides, generate a new id
-        const meta = loadMeta();
-        if(meta.profiles.find(p => p.id === parsed.id)) parsed.id = idGen('p');
-        parsed.createdAt = parsed.createdAt || nowISO();
-        parsed.updatedAt = nowISO();
-        saveProfile(parsed);
-        meta.profiles.push({ id: parsed.id, name: parsed.name, createdAt: parsed.createdAt, updatedAt: parsed.updatedAt });
-        meta.activeProfileId = parsed.id;
-        saveMeta(meta);
-        alert('Imported full profile as new profile: ' + parsed.name);
-      } else {
-        alert('Unrecognized import format. Expecting either a musical JSON (type: "musical" with "musical" + "songs") or a full profile JSON.');
-      }
-      refreshProfileSelect();
-      renderAll();
-    } catch(err){
-      alert('Import failed: ' + (err.message || err));
-    } finally {
-      importFileInput.value = '';
-    }
   });
 
   // storage event: update UI when other tab changes data
@@ -735,7 +602,6 @@
 
   // init UI
   initCatalog();
-  // make sure Admin exists even if meta already present
   ensureAdminProfile();
   refreshProfileSelect();
   renderAll();
@@ -745,7 +611,7 @@
     loadMeta, saveMeta, listProfiles, createProfile, deleteProfile,
     getActiveProfile, saveProfile, addMusical, addSong, editSong, deleteSong, renderAll,
     // catalog APIs
-    loadCatalog, saveCatalog, addCatalogMusical, addCatalogMusicalToProfile, importMusicalJson,
+    loadCatalog, saveCatalog, addCatalogMusical, addCatalogMusicalToProfile,
     // import-to-profile API
     addImportedMusicalToProfile
   };
