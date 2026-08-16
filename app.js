@@ -11,10 +11,69 @@
   const ADMIN_PIN = '853579';
 
   /* -------------------------
+     Custom prompt dialog
+     iOS Safari silently does nothing when window.prompt() is called
+     while the app is running in standalone (home-screen) mode, so we
+     build our own tiny input dialog instead. Returns a Promise that
+     resolves with the entered string, or null if cancelled.
+     ------------------------- */
+  function showPrompt(message, defaultValue = '') {
+    return new Promise((resolve) => {
+      const overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;box-sizing:border-box;';
+
+      const box = document.createElement('div');
+      box.style.cssText = 'background:#fff;border-radius:8px;padding:16px;width:100%;max-width:320px;box-sizing:border-box;font-family:inherit;';
+
+      const label = document.createElement('div');
+      label.textContent = message;
+      label.style.cssText = 'margin-bottom:10px;font-size:0.95rem;';
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = defaultValue;
+      input.style.cssText = 'width:100%;box-sizing:border-box;padding:8px;font-size:1rem;border:1px solid rgba(0,0,0,0.2);border-radius:6px;margin-bottom:12px;';
+
+      const btnRow = document.createElement('div');
+      btnRow.style.cssText = 'display:flex;justify-content:flex-end;gap:8px;';
+
+      const cancelBtn = document.createElement('button');
+      cancelBtn.type = 'button';
+      cancelBtn.textContent = 'Cancel';
+
+      const okBtn = document.createElement('button');
+      okBtn.type = 'button';
+      okBtn.textContent = 'OK';
+
+      function cleanup(result) {
+        document.body.removeChild(overlay);
+        resolve(result);
+      }
+
+      cancelBtn.addEventListener('click', () => cleanup(null));
+      okBtn.addEventListener('click', () => cleanup(input.value));
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); cleanup(input.value); }
+        else if (e.key === 'Escape') { e.preventDefault(); cleanup(null); }
+      });
+
+      btnRow.appendChild(cancelBtn);
+      btnRow.appendChild(okBtn);
+      box.appendChild(label);
+      box.appendChild(input);
+      box.appendChild(btnRow);
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+      input.focus();
+      input.select();
+    });
+  }
+
+  /* -------------------------
      Admin PIN Security Helper
      ------------------------- */
-  function authenticateAdmin() {
-    const inputPin = prompt('Enter Admin PIN to access this feature:');
+  async function authenticateAdmin() {
+    const inputPin = await showPrompt('Enter Admin PIN to access this feature:');
     if (inputPin === ADMIN_PIN) {
       return true;
     }
@@ -117,9 +176,9 @@
 
   function listProfiles() { return loadMeta().profiles.slice(); }
 
-  function createProfile(name) {
+  async function createProfile(name) {
     if (name && name.trim().toLowerCase() === 'admin') {
-      if (!authenticateAdmin()) return null;
+      if (!(await authenticateAdmin())) return null;
     }
 
     const meta = loadMeta();
@@ -144,10 +203,10 @@
     localStorage.removeItem(profileKey(id));
   }
 
-  function setActiveProfile(id) {
+  async function setActiveProfile(id) {
     const targetProfile = loadProfile(id);
     if (targetProfile && targetProfile.name === 'Admin') {
-      if (!authenticateAdmin()) {
+      if (!(await authenticateAdmin())) {
         refreshProfileSelect();
         return false;
       }
@@ -709,9 +768,9 @@
   /* -------------------------
      Admin functions
      ------------------------- */
-  function clearAllData() {
+  async function clearAllData() {
     if (!isAdminActive()) return alert('Only Admin can clear data.');
-    if (!authenticateAdmin()) return;
+    if (!(await authenticateAdmin())) return;
     if (!confirm('Delete ALL profiles and catalog data from this browser? This cannot be undone.')) return;
     Object.keys(localStorage).forEach(k => {
       if (k === META_KEY || k === CATALOG_KEY || k.startsWith(PROFILE_KEY_PREFIX) || k === EXPANDED_CARDS_KEY) {
@@ -728,10 +787,11 @@
   /* -------------------------
      Event wiring
      ------------------------- */
-  if (btnNewProfile) btnNewProfile.addEventListener('click', () => {
-    const name = prompt('New profile name:', 'New Profile'); if (!name) return;
-    if (createProfile(name)) {
-      refreshProfileSelect(); 
+  if (btnNewProfile) btnNewProfile.addEventListener('click', async () => {
+    const name = await showPrompt('New profile name:', 'New Profile');
+    if (!name) return;
+    if (await createProfile(name)) {
+      refreshProfileSelect();
       renderAll();
     }
   });
@@ -745,11 +805,11 @@
 
   if (btnClearAll) btnClearAll.addEventListener('click', clearAllData);
   
-  if (profileSelect) profileSelect.addEventListener('change', (e) => { 
-    if (!setActiveProfile(e.target.value)) {
+  if (profileSelect) profileSelect.addEventListener('change', async (e) => {
+    if (!(await setActiveProfile(e.target.value))) {
       return;
     }
-    renderAll(); 
+    renderAll();
   });
   
   if (btnAddMusical) btnAddMusical.addEventListener('click', () => openModal());
@@ -797,7 +857,7 @@
   });
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').catch(() => { /* ignore */ });
+    navigator.serviceWorker.register('./service-worker.js').catch(() => { /* ignore */ });
   }
 
   /* -------------------------
