@@ -1,289 +1,2156 @@
 {
   "version": 1,
+  "createdAt": "2026-08-15T20:47:00.000Z",
+  "updatedAt": "2026-08-15T20:47:00.000Z",
   "musicals": [
-    { "id": "m-beauty-and-the-beast", "name": "Beauty and the Beast", "color": "#f1c40f" },
-    { "id": "m-the-great-gatsby", "name": "The Great Gatsby", "color": "#16a085" },
-    { "id": "m-hamilton", "name": "Hamilton", "color": "#e67e22" },
-    { "id": "m-the-lion-king", "name": "The Lion King", "color": "#e74c3c" },
-    { "id": "m-and-juliet", "name": "& Juliet", "color": "#9b59b6" },
-    { "id": "m-dear-evan-hansen", "name": "Dear Evan Hansen", "color": "#2980b9" },
-    { "id": "m-six", "name": "Six", "color": "#8e44ad" },
-    { "id": "m-some-like-it-hot", "name": "Some Like It Hot", "color": "#d35400" },
-    { "id": "m-hairspray", "name": "Hairspray", "color": "#e84393" },
-    { "id": "m-mamma-mia", "name": "Mamma Mia!", "color": "#00cec9" },
-    { "id": "m-water-for-elephants", "name": "Water for Elephants", "color": "#27ae60" },
-    { "id": "m-the-book-of-mormon", "name": "The Book of Mormon", "color": "#34495e" },
-    { "id": "m-kimberly-akimbo", "name": "Kimberly Akimbo", "color": "#1289a7" }
+    {
+      "id": "m-beauty-and-the-beast",
+      "name": "Beauty and the Beast",
+      "color": "#ffe119",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-the-great-gatsby",
+      "name": "The Great Gatsby",
+      "color": "#3cb44b",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-hamilton",
+      "name": "Hamilton",
+      "color": "#f58231",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-the-lion-king",
+      "name": "The Lion King",
+      "color": "#e6194b",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-and-juliet",
+      "name": "& Juliet",
+      "color": "#911eb4",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-dear-evan-hansen",
+      "name": "Dear Evan Hansen",
+      "color": "#4363d8",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-six",
+      "name": "Six",
+      "color": "#f032e6",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-some-like-it-hot",
+      "name": "Some Like It Hot",
+      "color": "#808000",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-hairspray",
+      "name": "Hairspray",
+      "color": "#42d4f4",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-mamma-mia",
+      "name": "Mamma Mia!",
+      "color": "#bfef45",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-water-for-elephants",
+      "name": "Water for Elephants",
+      "color": "#800000",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-the-book-of-mormon",
+      "name": "The Book of Mormon",
+      "color": "#000075",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "m-kimberly-akimbo",
+      "name": "Kimberly Akimbo",
+      "color": "#a9a9a9",
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    }
   ],
   "songs": [
-    { "id": "s-101", "title": "Prologue (The Enchantress)", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-102", "title": "Belle", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-103", "title": "No Matter What", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-104", "title": "No Matter What (Reprise) / Wolf Chase", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-105", "title": "Me", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-106", "title": "Belle (Reprise)", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-107", "title": "Home", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-108", "title": "Home (Reprise)", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-109", "title": "Gaston", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-110", "title": "Gaston (Reprise)", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-111", "title": "How Long Must This Go On?", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-112", "title": "Be Our Guest", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-113", "title": "If I Can't Love Her", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-114", "title": "Entr'acte / Wolf Chase", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-115", "title": "Something There", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-116", "title": "Human Again", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-117", "title": "Maison Des Lunes", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-118", "title": "Beauty and the Beast", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-119", "title": "If I Can't Love Her (Reprise)", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-120", "title": "The Mob Song", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-121", "title": "The Battle", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-122", "title": "End Duet / Transformation", "musicalId": "m-beauty-and-the-beast" },
-    { "id": "s-123", "title": "Beauty and the Beast (Reprise)", "musicalId": "m-beauty-and-the-beast" },
-
-    { "id": "s-201", "title": "Roaring On", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-202", "title": "Absolute Rose", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-203", "title": "New Money", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-204", "title": "For Her", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-205", "title": "Valley of Ashes", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-206", "title": "Second-Hand Suit", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-207", "title": "For Better or Worse", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-208", "title": "The Met", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-209", "title": "Only Tea", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-210", "title": "My Green Light", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-211", "title": "Shady", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-212", "title": "Better Hold Tight", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-213", "title": "Past Is Catching Up to Me", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-214", "title": "La Dee Dah With You", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-215", "title": "Go", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-216", "title": "Made to Last", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-217", "title": "For Better or Worse (Reprise)", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-218", "title": "One-Way Road", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-219", "title": "God Sees Everything", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-220", "title": "For Her (Reprise)", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-221", "title": "New Money (Reprise)", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-222", "title": "Beautiful Little Fool", "musicalId": "m-the-great-gatsby" },
-    { "id": "s-223", "title": "Finale: Roaring On", "musicalId": "m-the-great-gatsby" },
-
-    { "id": "s-301", "title": "Alexander Hamilton", "musicalId": "m-hamilton" },
-    { "id": "s-302", "title": "Aaron Burr, Sir", "musicalId": "m-hamilton" },
-    { "id": "s-303", "title": "My Shot", "musicalId": "m-hamilton" },
-    { "id": "s-304", "title": "The Story of Tonight", "musicalId": "m-hamilton" },
-    { "id": "s-305", "title": "The Schuyler Sisters", "musicalId": "m-hamilton" },
-    { "id": "s-306", "title": "Farmer Refuted", "musicalId": "m-hamilton" },
-    { "id": "s-307", "title": "You'll Be Back", "musicalId": "m-hamilton" },
-    { "id": "s-308", "title": "Right Hand Man", "musicalId": "m-hamilton" },
-    { "id": "s-309", "title": "A Winter's Ball", "musicalId": "m-hamilton" },
-    { "id": "s-310", "title": "Helpless", "musicalId": "m-hamilton" },
-    { "id": "s-311", "title": "Satisfied", "musicalId": "m-hamilton" },
-    { "id": "s-312", "title": "The Story of Tonight (Reprise)", "musicalId": "m-hamilton" },
-    { "id": "s-313", "title": "Wait for It", "musicalId": "m-hamilton" },
-    { "id": "s-314", "title": "Stay Alive", "musicalId": "m-hamilton" },
-    { "id": "s-315", "title": "Ten Duel Commandments", "musicalId": "m-hamilton" },
-    { "id": "s-316", "title": "Meet Me Inside", "musicalId": "m-hamilton" },
-    { "id": "s-317", "title": "That Would Be Enough", "musicalId": "m-hamilton" },
-    { "id": "s-318", "title": "Guns and Ships", "musicalId": "m-hamilton" },
-    { "id": "s-319", "title": "History Has Its Eyes on You", "musicalId": "m-hamilton" },
-    { "id": "s-320", "title": "Yorktown (The World Turned Upside Down)", "musicalId": "m-hamilton" },
-    { "id": "s-321", "title": "What Comes Next?", "musicalId": "m-hamilton" },
-    { "id": "s-322", "title": "Dear Theodosia", "musicalId": "m-hamilton" },
-    { "id": "s-323", "title": "Non-Stop", "musicalId": "m-hamilton" },
-    { "id": "s-324", "title": "What'd I Miss", "musicalId": "m-hamilton" },
-    { "id": "s-325", "title": "Cabinet Battle #1", "musicalId": "m-hamilton" },
-    { "id": "s-326", "title": "Take a Break", "musicalId": "m-hamilton" },
-    { "id": "s-327", "title": "Say No to This", "musicalId": "m-hamilton" },
-    { "id": "s-328", "title": "The Room Where It Happens", "musicalId": "m-hamilton" },
-    { "id": "s-329", "title": "Schuyler Defeated", "musicalId": "m-hamilton" },
-    { "id": "s-330", "title": "Cabinet Battle #2", "musicalId": "m-hamilton" },
-    { "id": "s-331", "title": "Washington on Your Side", "musicalId": "m-hamilton" },
-    { "id": "s-332", "title": "One Last Time", "musicalId": "m-hamilton" },
-    { "id": "s-333", "title": "I Know Him", "musicalId": "m-hamilton" },
-    { "id": "s-334", "title": "The Adams Administration", "musicalId": "m-hamilton" },
-    { "id": "s-335", "title": "We Know", "musicalId": "m-hamilton" },
-    { "id": "s-336", "title": "Hurricane", "musicalId": "m-hamilton" },
-    { "id": "s-337", "title": "The Reynolds Pamphlet", "musicalId": "m-hamilton" },
-    { "id": "s-338", "title": "Burn", "musicalId": "m-hamilton" },
-    { "id": "s-339", "title": "Blow Us All Away", "musicalId": "m-hamilton" },
-    { "id": "s-340", "title": "Stay Alive (Reprise)", "musicalId": "m-hamilton" },
-    { "id": "s-341", "title": "It's Quiet Uptown", "musicalId": "m-hamilton" },
-    { "id": "s-342", "title": "The Election of 1800", "musicalId": "m-hamilton" },
-    { "id": "s-343", "title": "Your Obedient Servant", "musicalId": "m-hamilton" },
-    { "id": "s-344", "title": "Best of Wives and Best of Women", "musicalId": "m-hamilton" },
-    { "id": "s-345", "title": "The World Was Wide Enough", "musicalId": "m-hamilton" },
-    { "id": "s-346", "title": "Who Lives, Who Dies, Who Tells Your Story", "musicalId": "m-hamilton" },
-
-    { "id": "s-401", "title": "Circle of Life", "musicalId": "m-the-lion-king" },
-    { "id": "s-402", "title": "Grasslands Chant", "musicalId": "m-the-lion-king" },
-    { "id": "s-403", "title": "The Morning Report", "musicalId": "m-the-lion-king" },
-    { "id": "s-404", "title": "The Lioness Hunt", "musicalId": "m-the-lion-king" },
-    { "id": "s-405", "title": "I Just Can't Wait to Be King", "musicalId": "m-the-lion-king" },
-    { "id": "s-406", "title": "Chow Down", "musicalId": "m-the-lion-king" },
-    { "id": "s-407", "title": "They Live in You", "musicalId": "m-the-lion-king" },
-    { "id": "s-408", "title": "Be Prepared", "musicalId": "m-the-lion-king" },
-    { "id": "s-409", "title": "The Stampede", "musicalId": "m-the-lion-king" },
-    { "id": "s-410", "title": "Rafiki Mourns", "musicalId": "m-the-lion-king" },
-    { "id": "s-411", "title": "Hakuna Matata", "musicalId": "m-the-lion-king" },
-    { "id": "s-412", "title": "One by One", "musicalId": "m-the-lion-king" },
-    { "id": "s-413", "title": "The Madness of King Scar", "musicalId": "m-the-lion-king" },
-    { "id": "s-414", "title": "Shadowland", "musicalId": "m-the-lion-king" },
-    { "id": "s-415", "title": "The Lion Sleeps Tonight", "musicalId": "m-the-lion-king" },
-    { "id": "s-416", "title": "Endless Night", "musicalId": "m-the-lion-king" },
-    { "id": "s-417", "title": "Can You Feel the Love Tonight", "musicalId": "m-the-lion-king" },
-    { "id": "s-418", "title": "He Lives in You (Reprise)", "musicalId": "m-the-lion-king" },
-    { "id": "s-419", "title": "Simba Confronts Scar", "musicalId": "m-the-lion-king" },
-    { "id": "s-420", "title": "King of Pride Rock / Circle of Life (Reprise)", "musicalId": "m-the-lion-king" },
-
-    { "id": "s-501", "title": "Larger Than Life", "musicalId": "m-and-juliet" },
-    { "id": "s-502", "title": "I Want It That Way", "musicalId": "m-and-juliet" },
-    { "id": "s-503", "title": "...Baby One More Time", "musicalId": "m-and-juliet" },
-    { "id": "s-504", "title": "Show Me the Meaning of Being Lonely", "musicalId": "m-and-juliet" },
-    { "id": "s-505", "title": "Domino", "musicalId": "m-and-juliet" },
-    { "id": "s-506", "title": "Show Me Love", "musicalId": "m-and-juliet" },
-    { "id": "s-507", "title": "Blow", "musicalId": "m-and-juliet" },
-    { "id": "s-508", "title": "I'm Not a Girl, Not Yet a Woman", "musicalId": "m-and-juliet" },
-    { "id": "s-509", "title": "Overprotected", "musicalId": "m-and-juliet" },
-    { "id": "s-510", "title": "Confident", "musicalId": "m-and-juliet" },
-    { "id": "s-511", "title": "That's the Way It Is", "musicalId": "m-and-juliet" },
-    { "id": "s-512", "title": "Teenage Dream / Break Free", "musicalId": "m-and-juliet" },
-    { "id": "s-513", "title": "Oops!... I Did It Again", "musicalId": "m-and-juliet" },
-    { "id": "s-514", "title": "I Kissed a Girl", "musicalId": "m-and-juliet" },
-    { "id": "s-515", "title": "It's My Life", "musicalId": "m-and-juliet" },
-    { "id": "s-516", "title": "Love Me Like You Do", "musicalId": "m-and-juliet" },
-    { "id": "s-517", "title": "Since U Been Gone", "musicalId": "m-and-juliet" },
-    { "id": "s-518", "title": "What Part of No", "musicalId": "m-and-juliet" },
-    { "id": "s-519", "title": "One More Try", "musicalId": "m-and-juliet" },
-    { "id": "s-520", "title": "Problem / Can't Feel My Face", "musicalId": "m-and-juliet" },
-    { "id": "s-521", "title": "That's the Way It Is (Reprise)", "musicalId": "m-and-juliet" },
-    { "id": "s-522", "title": "Everybody (Backstreet's Back)", "musicalId": "m-and-juliet" },
-    { "id": "s-523", "title": "As Long As You Love Me", "musicalId": "m-and-juliet" },
-    { "id": "s-524", "title": "It's Gonna Be Me", "musicalId": "m-and-juliet" },
-    { "id": "s-525", "title": "Shape of My Heart", "musicalId": "m-and-juliet" },
-    { "id": "s-526", "title": "Stronger", "musicalId": "m-and-juliet" },
-    { "id": "s-527", "title": "Fuckin' Perfect", "musicalId": "m-and-juliet" },
-    { "id": "s-528", "title": "Roar", "musicalId": "m-and-juliet" },
-    { "id": "s-529", "title": "Can't Stop the Feeling!", "musicalId": "m-and-juliet" },
-
-    { "id": "s-601", "title": "Anybody Have a Map?", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-602", "title": "Waving Through a Window", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-603", "title": "For Forever", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-604", "title": "Sincerely, Me", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-605", "title": "Requiem", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-606", "title": "If I Could Tell Her", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-607", "title": "Disappear", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-608", "title": "You Will Be Found", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-609", "title": "To Break In a Glove", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-610", "title": "Only Us", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-611", "title": "Good for You", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-612", "title": "Words Fail", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-613", "title": "So Big / So Small", "musicalId": "m-dear-evan-hansen" },
-    { "id": "s-614", "title": "Finale", "musicalId": "m-dear-evan-hansen" },
-
-    { "id": "s-701", "title": "Ex-Wives", "musicalId": "m-six" },
-    { "id": "s-702", "title": "No Way", "musicalId": "m-six" },
-    { "id": "s-703", "title": "Don't Lose Ur Head", "musicalId": "m-six" },
-    { "id": "s-704", "title": "Heart of Stone", "musicalId": "m-six" },
-    { "id": "s-705", "title": "Haus of Holbein", "musicalId": "m-six" },
-    { "id": "s-706", "title": "Get Down", "musicalId": "m-six" },
-    { "id": "s-707", "title": "All You Wanna Do", "musicalId": "m-six" },
-    { "id": "s-708", "title": "I Don't Need Your Love", "musicalId": "m-six" },
-    { "id": "s-709", "title": "Six", "musicalId": "m-six" },
-    { "id": "s-710", "title": "Megasix", "musicalId": "m-six" },
-
-    { "id": "s-801", "title": "What Are You Thirsty For?", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-802", "title": "You Can't Have Me (If You Don't Have Him)", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-803", "title": "Vamp", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-804", "title": "I'm California Bound", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-805", "title": "A Dark Night for Frankie", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-806", "title": "A Zee-Brah Is a Horse in Stripes", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-807", "title": "At the Old Majestic", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-808", "title": "You Coulda Knocked Me Over With a Feather", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-809", "title": "He Does It for Me", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-810", "title": "Dance the World Away", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-811", "title": "Fly, Robin, Fly", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-812", "title": "Some Like It Hot", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-813", "title": "Let's Be Bad", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-814", "title": "Ride Out the Storm", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-815", "title": "Tip Tap Trouble", "musicalId": "m-some-like-it-hot" },
-    { "id": "s-816", "title": "Baby, Let's Strike Up the Band", "musicalId": "m-some-like-it-hot" },
-
-    { "id": "s-901", "title": "Good Morning Baltimore", "musicalId": "m-hairspray" },
-    { "id": "s-902", "title": "The Nicest Kids in Town", "musicalId": "m-hairspray" },
-    { "id": "s-903", "title": "Mama, I'm a Big Girl Now", "musicalId": "m-hairspray" },
-    { "id": "s-904", "title": "I Can Hear the Bells", "musicalId": "m-hairspray" },
-    { "id": "s-905", "title": "(The Legend of) Miss Baltimore Crabs", "musicalId": "m-hairspray" },
-    { "id": "s-906", "title": "Welcome to the 60's", "musicalId": "m-hairspray" },
-    { "id": "s-907", "title": "Run and Tell That!", "musicalId": "m-hairspray" },
-    { "id": "s-908", "title": "Big, Blonde and Beautiful", "musicalId": "m-hairspray" },
-    { "id": "s-909", "title": "The Big Dollhouse", "musicalId": "m-hairspray" },
-    { "id": "s-910", "title": "Good Morning Baltimore (Reprise)", "musicalId": "m-hairspray" },
-    { "id": "s-911", "title": "(You're) Timeless to Me", "musicalId": "m-hairspray" },
-    { "id": "s-912", "title": "I Know Where I've Been", "musicalId": "m-hairspray" },
-    { "id": "s-913", "title": "Without Love", "musicalId": "m-hairspray" },
-    { "id": "s-914", "title": "(It's) Hairspray", "musicalId": "m-hairspray" },
-    { "id": "s-915", "title": "Cooties", "musicalId": "m-hairspray" },
-    { "id": "s-916", "title": "You Can'stop the Beat", "musicalId": "m-hairspray" },
-
-    { "id": "s-1001", "title": "Overture / Prologue", "musicalId": "m-mamma-mia" },
-    { "id": "s-1002", "title": "Honey, Honey", "musicalId": "m-mamma-mia" },
-    { "id": "s-1003", "title": "Money, Money, Money", "musicalId": "m-mamma-mia" },
-    { "id": "s-1004", "title": "Thank You for the Music", "musicalId": "m-mamma-mia" },
-    { "id": "s-1005", "title": "Mamma Mia", "musicalId": "m-mamma-mia" },
-    { "id": "s-1006", "title": "Chiquitita", "musicalId": "m-mamma-mia" },
-    { "id": "s-1007", "title": "Dancing Queen", "musicalId": "m-mamma-mia" },
-    { "id": "s-1008", "title": "Lay All Your Love on Me", "musicalId": "m-mamma-mia" },
-    { "id": "s-1009", "title": "Super Trouper", "musicalId": "m-mamma-mia" },
-    { "id": "s-1010", "title": "Gimme! Gimme! Gimme! (A Man After Midnight)", "musicalId": "m-mamma-mia" },
-    { "id": "s-1011", "title": "The Name of the Game", "musicalId": "m-mamma-mia" },
-    { "id": "s-1012", "title": "Voulez-Vous", "musicalId": "m-mamma-mia" },
-    { "id": "s-1013", "title": "Entr'acte", "musicalId": "m-mamma-mia" },
-    { "id": "s-1014", "title": "SOS", "musicalId": "m-mamma-mia" },
-    { "id": "s-1015", "title": "Does Your Mother Know", "musicalId": "m-mamma-mia" },
-    { "id": "s-1016", "title": "One of Us", "musicalId": "m-mamma-mia" },
-    { "id": "s-1017", "title": "The Winner Takes It All", "musicalId": "m-mamma-mia" },
-    { "id": "s-1018", "title": "Our Last Summer", "musicalId": "m-mamma-mia" },
-    { "id": "s-1019", "title": "Slipping Through My Fingers", "musicalId": "m-mamma-mia" },
-    { "id": "s-1020", "title": "I Have a Dream", "musicalId": "m-mamma-mia" },
-
-    { "id": "s-1101", "title": "Agnes of Rome", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1102", "title": "Did Tomorrow Come?", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1103", "title": "The Grand Spec", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1104", "title": "Easy", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1105", "title": "The Lion Gotta Eat", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1106", "title": "I Choose the Train", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1107", "title": "I Road Out of Town", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1108", "title": "Any-a-Afford This", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1109", "title": "Silver Stars", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1110", "title": "I'm Gone", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1111", "title": "Zora", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1112", "title": "Always", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1113", "title": "From Now On", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1114", "title": "Wild", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1115", "title": "What Do You Do?", "musicalId": "m-water-for-elephants" },
-    { "id": "s-1116", "title": "Go Home", "musicalId": "m-water-for-elephants" },
-
-    { "id": "s-1201", "title": "Hello!", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1202", "title": "Two by Two", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1203", "title": "You and Me (But Mostly Me)", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1204", "title": "Hasa Diga Eebowai", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1205", "title": "Turn It Off", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1206", "title": "I Am Here for You", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1207", "title": "All About You", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1208", "title": "Baptize Me", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1209", "title": "I Am Africa", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1210", "title": "Joseph Smith American Moses", "musicalId": "m-the-book-of-mormon" },
-    { "id": "s-1211", "title": "Tomorrow Is a Latter Day", "musicalId": "m-the-book-of-mormon" },
-
-    { "id": "s-1301", "title": "Hello, Darling", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1302", "title": "Make a Wish", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1303", "title": "Anachronism", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1304", "title": "Better", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1305", "title": "Father Time", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1306", "title": "Happy for Her", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1307", "title": "No Big Deal", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1308", "title": "Our Disease", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1309", "title": "The Inevitable Turn", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1310", "title": "Now", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1311", "title": "How to Wash a Check", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1312", "title": "Good Kid", "musicalId": "m-kimberly-akimbo" },
-    { "id": "s-1313", "title": "Great Adventure", "musicalId": "m-kimberly-akimbo" }
+    {
+      "id": "s-101",
+      "title": "Prologue (The Enchantress)",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-102",
+      "title": "Belle",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-103",
+      "title": "No Matter What",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-104",
+      "title": "No Matter What (Reprise) / Wolf Chase",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-105",
+      "title": "Me",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-106",
+      "title": "Belle (Reprise)",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-107",
+      "title": "Home",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-108",
+      "title": "Home (Reprise)",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-109",
+      "title": "Gaston",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-110",
+      "title": "Gaston (Reprise)",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-111",
+      "title": "How Long Must This Go On?",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-112",
+      "title": "Be Our Guest",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-113",
+      "title": "If I Can't Love Her",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-114",
+      "title": "Entr'acte / Wolf Chase",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-115",
+      "title": "Something There",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-116",
+      "title": "Human Again",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-117",
+      "title": "Maison Des Lunes",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-118",
+      "title": "Beauty and the Beast",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-119",
+      "title": "If I Can't Love Her (Reprise)",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-120",
+      "title": "The Mob Song",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-121",
+      "title": "The Battle",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-122",
+      "title": "End Duet / Transformation",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-123",
+      "title": "Beauty and the Beast (Reprise)",
+      "musicalId": "m-beauty-and-the-beast",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-201",
+      "title": "Roaring On",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-202",
+      "title": "Absolute Rose",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-203",
+      "title": "New Money",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-204",
+      "title": "For Her",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-205",
+      "title": "Valley of Ashes",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-206",
+      "title": "Second-Hand Suit",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-207",
+      "title": "For Better or Worse",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-208",
+      "title": "The Met",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-209",
+      "title": "Only Tea",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-210",
+      "title": "My Green Light",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-211",
+      "title": "Shady",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-212",
+      "title": "Better Hold Tight",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-213",
+      "title": "Past Is Catching Up to Me",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-214",
+      "title": "La Dee Dah With You",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-215",
+      "title": "Go",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-216",
+      "title": "Made to Last",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-217",
+      "title": "For Better or Worse (Reprise)",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-218",
+      "title": "One-Way Road",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-219",
+      "title": "God Sees Everything",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-220",
+      "title": "For Her (Reprise)",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-221",
+      "title": "New Money (Reprise)",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-222",
+      "title": "Beautiful Little Fool",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-223",
+      "title": "Finale: Roaring On",
+      "musicalId": "m-the-great-gatsby",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-301",
+      "title": "Alexander Hamilton",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-302",
+      "title": "Aaron Burr, Sir",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-303",
+      "title": "My Shot",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-304",
+      "title": "The Story of Tonight",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-305",
+      "title": "The Schuyler Sisters",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-306",
+      "title": "Farmer Refuted",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-307",
+      "title": "You'll Be Back",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-308",
+      "title": "Right Hand Man",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-309",
+      "title": "A Winter's Ball",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-310",
+      "title": "Helpless",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-311",
+      "title": "Satisfied",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-312",
+      "title": "The Story of Tonight (Reprise)",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-313",
+      "title": "Wait for It",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-314",
+      "title": "Stay Alive",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-315",
+      "title": "Ten Duel Commandments",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-316",
+      "title": "Meet Me Inside",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-317",
+      "title": "That Would Be Enough",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-318",
+      "title": "Guns and Ships",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-319",
+      "title": "History Has Its Eyes on You",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-320",
+      "title": "Yorktown (The World Turned Upside Down)",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-321",
+      "title": "What Comes Next?",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-322",
+      "title": "Dear Theodosia",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-323",
+      "title": "Non-Stop",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-324",
+      "title": "What'd I Miss",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-325",
+      "title": "Cabinet Battle #1",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-326",
+      "title": "Take a Break",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-327",
+      "title": "Say No to This",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-328",
+      "title": "The Room Where It Happens",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-329",
+      "title": "Schuyler Defeated",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-330",
+      "title": "Cabinet Battle #2",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-331",
+      "title": "Washington on Your Side",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-332",
+      "title": "One Last Time",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-333",
+      "title": "I Know Him",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-334",
+      "title": "The Adams Administration",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-335",
+      "title": "We Know",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-336",
+      "title": "Hurricane",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-337",
+      "title": "The Reynolds Pamphlet",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-338",
+      "title": "Burn",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-339",
+      "title": "Blow Us All Away",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-340",
+      "title": "Stay Alive (Reprise)",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-341",
+      "title": "It's Quiet Uptown",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-342",
+      "title": "The Election of 1800",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-343",
+      "title": "Your Obedient Servant",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-344",
+      "title": "Best of Wives and Best of Women",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-345",
+      "title": "The World Was Wide Enough",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-346",
+      "title": "Who Lives, Who Dies, Who Tells Your Story",
+      "musicalId": "m-hamilton",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-401",
+      "title": "Circle of Life",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-402",
+      "title": "Grasslands Chant",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-403",
+      "title": "The Morning Report",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-404",
+      "title": "The Lioness Hunt",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-405",
+      "title": "I Just Can't Wait to Be King",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-406",
+      "title": "Chow Down",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-407",
+      "title": "They Live in You",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-408",
+      "title": "Be Prepared",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-409",
+      "title": "The Stampede",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-410",
+      "title": "Rafiki Mourns",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-411",
+      "title": "Hakuna Matata",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-412",
+      "title": "One by One",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-413",
+      "title": "The Madness of King Scar",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-414",
+      "title": "Shadowland",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-415",
+      "title": "The Lion Sleeps Tonight",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-416",
+      "title": "Endless Night",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-417",
+      "title": "Can You Feel the Love Tonight",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-418",
+      "title": "He Lives in You (Reprise)",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-419",
+      "title": "Simba Confronts Scar",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-420",
+      "title": "King of Pride Rock / Circle of Life (Reprise)",
+      "musicalId": "m-the-lion-king",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-501",
+      "title": "Larger Than Life",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-502",
+      "title": "I Want It That Way",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-503",
+      "title": "...Baby One More Time",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-504",
+      "title": "Show Me the Meaning of Being Lonely",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-505",
+      "title": "Domino",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-506",
+      "title": "Show Me Love",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-507",
+      "title": "Blow",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-508",
+      "title": "I'm Not a Girl, Not Yet a Woman",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-509",
+      "title": "Overprotected",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-510",
+      "title": "Confident",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-511",
+      "title": "That's the Way It Is",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-512",
+      "title": "Teenage Dream / Break Free",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-513",
+      "title": "Oops!... I Did It Again",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-514",
+      "title": "I Kissed a Girl",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-515",
+      "title": "It's My Life",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-516",
+      "title": "Love Me Like You Do",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-517",
+      "title": "Since U Been Gone",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-518",
+      "title": "What Part of No",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-519",
+      "title": "One More Try",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-520",
+      "title": "Problem / Can't Feel My Face",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-521",
+      "title": "That's the Way It Is (Reprise)",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-522",
+      "title": "Everybody (Backstreet's Back)",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-523",
+      "title": "As Long As You Love Me",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-524",
+      "title": "It's Gonna Be Me",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-525",
+      "title": "Shape of My Heart",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-526",
+      "title": "Stronger",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-527",
+      "title": "Perfect",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-528",
+      "title": "Roar",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-529",
+      "title": "Can't Stop the Feeling!",
+      "musicalId": "m-and-juliet",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-601",
+      "title": "Anybody Have a Map?",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-602",
+      "title": "Waving Through a Window",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-603",
+      "title": "For Forever",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-604",
+      "title": "Sincerely, Me",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-605",
+      "title": "Requiem",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-606",
+      "title": "If I Could Tell Her",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-607",
+      "title": "Disappear",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-608",
+      "title": "You Will Be Found",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-609",
+      "title": "To Break In a Glove",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-610",
+      "title": "Only Us",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-611",
+      "title": "Good for You",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-612",
+      "title": "Words Fail",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-613",
+      "title": "So Big / So Small",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-614",
+      "title": "Finale",
+      "musicalId": "m-dear-evan-hansen",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-701",
+      "title": "Ex-Wives",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-702",
+      "title": "No Way",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-703",
+      "title": "Don't Lose Ur Head",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-704",
+      "title": "Heart of Stone",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-705",
+      "title": "Haus of Holbein",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-706",
+      "title": "Get Down",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-707",
+      "title": "All You Wanna Do",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-708",
+      "title": "I Don't Need Your Love",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-709",
+      "title": "Six",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-710",
+      "title": "Megasix",
+      "musicalId": "m-six",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-801",
+      "title": "What Are You Thirsty For?",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-802",
+      "title": "You Can't Have Me (If You Don't Have Him)",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-803",
+      "title": "Vamp",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-804",
+      "title": "I'm California Bound",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-805",
+      "title": "A Dark Night for Frankie",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-806",
+      "title": "A Zee-Brah Is a Horse in Stripes",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-807",
+      "title": "At the Old Majestic",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-808",
+      "title": "You Coulda Knocked Me Over With a Feather",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-809",
+      "title": "He Does It for Me",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-810",
+      "title": "Dance the World Away",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-811",
+      "title": "Fly, Robin, Fly",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-812",
+      "title": "Some Like It Hot",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-813",
+      "title": "Let's Be Bad",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-814",
+      "title": "Ride Out the Storm",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-815",
+      "title": "Tip Tap Trouble",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-816",
+      "title": "Baby, Let's Strike Up the Band",
+      "musicalId": "m-some-like-it-hot",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-901",
+      "title": "Good Morning Baltimore",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-902",
+      "title": "The Nicest Kids in Town",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-903",
+      "title": "Mama, I'm a Big Girl Now",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-904",
+      "title": "I Can Hear the Bells",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-905",
+      "title": "(The Legend of) Miss Baltimore Crabs",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-906",
+      "title": "Welcome to the 60's",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-907",
+      "title": "Run and Tell That!",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-908",
+      "title": "Big, Blonde and Beautiful",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-909",
+      "title": "The Big Dollhouse",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-910",
+      "title": "Good Morning Baltimore (Reprise)",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-911",
+      "title": "(You're) Timeless to Me",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-912",
+      "title": "I Know Where I've Been",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-913",
+      "title": "Without Love",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-914",
+      "title": "(It's) Hairspray",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-915",
+      "title": "Cooties",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-916",
+      "title": "You Can't Stop the Beat",
+      "musicalId": "m-hairspray",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1001",
+      "title": "Overture / Prologue",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1002",
+      "title": "Honey, Honey",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1003",
+      "title": "Money, Money, Money",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1004",
+      "title": "Thank You for the Music",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1005",
+      "title": "Mamma Mia",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1006",
+      "title": "Chiquitita",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1007",
+      "title": "Dancing Queen",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1008",
+      "title": "Lay All Your Love on Me",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1009",
+      "title": "Super Trouper",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1010",
+      "title": "Gimme! Gimme! Gimme! (A Man After Midnight)",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1011",
+      "title": "The Name of the Game",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1012",
+      "title": "Voulez-Vous",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1013",
+      "title": "Entr'acte",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1014",
+      "title": "SOS",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1015",
+      "title": "Does Your Mother Know",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1016",
+      "title": "One of Us",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1017",
+      "title": "The Winner Takes It All",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1018",
+      "title": "Our Last Summer",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1019",
+      "title": "Slipping Through My Fingers",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1020",
+      "title": "I Have a Dream",
+      "musicalId": "m-mamma-mia",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1101",
+      "title": "Agnes of Rome",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1102",
+      "title": "Did Tomorrow Come?",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1103",
+      "title": "The Grand Spec",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1104",
+      "title": "Easy",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1105",
+      "title": "The Lion Gotta Eat",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1106",
+      "title": "I Choose the Train",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1107",
+      "title": "I Road Out of Town",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1108",
+      "title": "Any-a-Afford This",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1109",
+      "title": "Silver Stars",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1110",
+      "title": "I'm Gone",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1111",
+      "title": "Zora",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1112",
+      "title": "Always",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1113",
+      "title": "From Now On",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1114",
+      "title": "Wild",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1115",
+      "title": "What Do You Do?",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1116",
+      "title": "Go Home",
+      "musicalId": "m-water-for-elephants",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1201",
+      "title": "Hello!",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1202",
+      "title": "Two by Two",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1203",
+      "title": "You and Me (But Mostly Me)",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1204",
+      "title": "Hasa Diga Eebowai",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1205",
+      "title": "Turn It Off",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1206",
+      "title": "I Am Here for You",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1207",
+      "title": "All About You",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1208",
+      "title": "Baptize Me",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1209",
+      "title": "I Am Africa",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1210",
+      "title": "Joseph Smith American Moses",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1211",
+      "title": "Tomorrow Is a Latter Day",
+      "musicalId": "m-the-book-of-mormon",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1301",
+      "title": "Hello, Darling",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1302",
+      "title": "Make a Wish",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1303",
+      "title": "Anachronism",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1304",
+      "title": "Better",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1305",
+      "title": "Father Time",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1306",
+      "title": "Happy for Her",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1307",
+      "title": "No Big Deal",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1308",
+      "title": "Our Disease",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1309",
+      "title": "The Inevitable Turn",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1310",
+      "title": "Now",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1311",
+      "title": "How to Wash a Check",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1312",
+      "title": "Good Kid",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    },
+    {
+      "id": "s-1313",
+      "title": "Great Adventure",
+      "musicalId": "m-kimberly-akimbo",
+      "tier": null,
+      "createdAt": "2026-08-15T20:47:00.000Z",
+      "updatedAt": "2026-08-15T20:47:00.000Z"
+    }
   ]
-}
+    }
