@@ -196,6 +196,13 @@
     return m;
   }
 
+  function deleteCatalogMusical(catalogMusicalId) {
+    const catalog = loadCatalog();
+    catalog.musicals = catalog.musicals.filter(m => m.id !== catalogMusicalId);
+    catalog.songs = catalog.songs.filter(s => s.musicalId !== catalogMusicalId);
+    saveCatalog(catalog);
+  }
+
   /* -------------------------
      Profile-level operations
      ------------------------- */
@@ -420,6 +427,9 @@
       catalogListEl.innerHTML = '<div class="catalog-empty">No catalog items</div>';
       return;
     }
+
+    const admin = isAdminActive();
+
     catalog.musicals.forEach(m => {
       const item = document.createElement('div');
       item.className = 'catalog-item';
@@ -428,8 +438,22 @@
       const label = document.createElement('div'); label.textContent = m.name;
       item.appendChild(dot); item.appendChild(label);
       item.dataset.mid = m.id;
-      item.addEventListener('click', () => {
-        if (!isAdminActive()) {
+
+      if (admin) {
+        // Render Delete button in catalog items when viewing as Admin
+        const btnDelete = document.createElement('button');
+        btnDelete.className = 'catalog-item-delete';
+        btnDelete.textContent = 'Delete';
+        btnDelete.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevents clicking the list item itself
+          if (!confirm(`Delete "${m.name}" from the global catalog?`)) return;
+          deleteCatalogMusical(m.id);
+          populateCatalogList();
+        });
+        item.appendChild(btnDelete);
+      } else {
+        // Normal profile action: clicking adds catalog item to profile
+        item.addEventListener('click', () => {
           try {
             const profile = getActiveProfile();
             if (!profile) return alert('No active profile');
@@ -439,11 +463,10 @@
           } catch (err) {
             alert('Failed to add catalog musical: ' + (err.message || err));
           }
-        } else {
-          alert('Admin: to add this musical to a profile, switch to the target profile and tap it.');
-        }
-      });
-      item.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') item.click(); });
+        });
+        item.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') item.click(); });
+      }
+
       catalogListEl.appendChild(item);
     });
   }
@@ -607,7 +630,7 @@
     if (admin) {
       if (adminSection) adminSection.style.display = 'block';
       if (catalogEmptyMsg) catalogEmptyMsg.style.display = 'none';
-      if (modalTitle) modalTitle.textContent = 'Add Musical';
+      if (modalTitle) modalTitle.textContent = 'Manage Catalog';
     } else {
       if (adminSection) adminSection.style.display = 'none';
       if (modalTitle) modalTitle.textContent = 'Select a Musical';
@@ -763,7 +786,7 @@
   window.bsv = {
     loadMeta, saveMeta, listProfiles, createProfile, deleteProfile, setActiveProfile,
     getActiveProfile, saveProfile,
-    loadCatalog, saveCatalog, addCatalogMusical,
+    loadCatalog, saveCatalog, addCatalogMusical, deleteCatalogMusical,
     addCatalogMusicalToProfile, addImportedMusicalToProfile,
     renderAll
   };
