@@ -326,6 +326,28 @@
     
     const yScale = d3.scaleLinear().domain([0.4, 5.6]).range([innerH, 0]);
 
+    // Unique gradient ID per container render
+    const gradientId = 'violin-gradient-' + Math.random().toString(36).slice(2, 9);
+    
+    // Define the 5-color vertical gradient
+    const defs = svg.append('defs');
+    const linearGradient = defs.append('linearGradient')
+      .attr('id', gradientId)
+      .attr('x1', '0%').attr('y1', '100%') // 1 (Red) at bottom
+      .attr('x2', '0%').attr('y2', '0%');   // 5 (Dark Green) at top
+
+    linearGradient.selectAll('stop')
+      .data([
+        { offset: '0%', color: '#d9534f' },   // 1: Red
+        { offset: '25%', color: '#f0ad4e' },  // 2: Yellow
+        { offset: '50%', color: '#adba2d' },  // 3: Yellowish Green
+        { offset: '75%', color: '#5cb85c' },  // 4: Light Green
+        { offset: '100%', color: '#1f7a36' }  // 5: Dark Green
+      ])
+      .enter().append('stop')
+      .attr('offset', d => d.offset)
+      .attr('stop-color', d => d.color);
+
     const validVals = values.filter(v => v !== null && v !== undefined && !isNaN(v)).map(Number);
     
     if (validVals.length > 0) {
@@ -342,9 +364,10 @@
       g.append('path')
         .datum(density)
         .attr('d', area)
-        .attr('fill', options.fill || 'rgba(255,255,255,0.95)')
-        .attr('stroke', options.stroke || '#c9c4b8')
-        .attr('stroke-width', 1.2);
+        .attr('fill', `url(#${gradientId})`)
+        .attr('stroke', '#222')
+        .attr('stroke-width', 1)
+        .attr('opacity', 0.85);
 
       if (options.dotData && options.dotData.length) {
         const densArr = density;
@@ -364,13 +387,13 @@
         const maxJig = innerW * 0.45;
         const maxDens = d3.max(density, d => d[1]) || 1;
         const dots = g.selectAll('.dot').data(options.dotData, d => d.id);
-        const enter = dots.enter().append('circle').attr('r', 5).attr('stroke', '#2222').attr('opacity', 0.95);
+        const enter = dots.enter().append('circle').attr('r', 5).attr('stroke', '#ffffff').attr('stroke-width', 1.5).attr('opacity', 0.95);
         enter.attr('cx', d => {
           const dens = densityAt(d.y) || 0.001;
           const maxX = maxDens ? (dens / maxDens) * maxJig : 1;
           const r = (Math.random() * 2 - 1) * maxX;
           return xScaleDensity(r);
-        }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#999').append('title').text(d => d.title);
+        }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#333').append('title').text(d => d.title);
       }
     } else {
       g.append('line')
@@ -388,12 +411,13 @@
       .append('line')
       .attr('x1', 0).attr('x2', innerW)
       .attr('y1', d => yScale(d)).attr('y2', d => yScale(d))
-      .attr('stroke', 'rgba(0,0,0,0.04)');
+      .attr('stroke', 'rgba(0,0,0,0.1)');
 
     g.selectAll('.tier-label').data(tiers).enter()
       .append('text').attr('x', 4).attr('y', d => yScale(d) - 6).text(d => d)
-      .attr('font-size', 11).attr('fill', '#777');
+      .attr('font-size', 11).attr('fill', '#444').attr('font-weight', '600');
   }
+
 
   /* -------------------------
      DOM elements
