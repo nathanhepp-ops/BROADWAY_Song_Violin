@@ -329,7 +329,7 @@
     // Unique gradient ID per container render
     const gradientId = 'violin-gradient-' + Math.random().toString(36).slice(2, 9);
     
-    // Define the 5-color vertical gradient
+    // Define the 5-color vertical gradient aligned directly with scale tiers
     const defs = svg.append('defs');
     const linearGradient = defs.append('linearGradient')
       .attr('id', gradientId)
@@ -338,11 +338,11 @@
 
     linearGradient.selectAll('stop')
       .data([
-        { offset: '0%', color: '#d9534f' },   // 1: Red
-        { offset: '25%', color: '#f0ad4e' },  // 2: Yellow
-        { offset: '50%', color: '#adba2d' },  // 3: Yellowish Green
-        { offset: '75%', color: '#5cb85c' },  // 4: Light Green
-        { offset: '100%', color: '#1f7a36' }  // 5: Dark Green
+        { offset: '11.5%', color: '#d9534f' }, // Tier 1: Red
+        { offset: '30.7%', color: '#f0ad4e' }, // Tier 2: Yellow
+        { offset: '50.0%', color: '#adba2d' }, // Tier 3: Yellowish Green
+        { offset: '69.2%', color: '#5cb85c' }, // Tier 4: Light Green
+        { offset: '88.5%', color: '#1f7a36' }  // Tier 5: Dark Green
       ])
       .enter().append('stop')
       .attr('offset', d => d.offset)
@@ -418,7 +418,6 @@
       .attr('font-size', 11).attr('fill', '#444').attr('font-weight', '600');
   }
 
-
   /* -------------------------
      DOM elements
      ------------------------- */
@@ -469,7 +468,7 @@
         btnDelete.className = 'catalog-item-delete';
         btnDelete.textContent = 'Delete';
         btnDelete.addEventListener('click', (e) => {
-          e.stopPropagation(); // Prevents clicking the list item itself
+          e.stopPropagation();
           if (!confirm(`Delete "${m.name}" from the global catalog?`)) return;
           deleteCatalogMusical(m.id);
           populateCatalogList();
@@ -646,8 +645,6 @@
     modal.classList.remove('hidden');
     const admin = isAdminActive();
 
-    populateCatalogList();
-
     const modalTitle = qs('#modal-title') || qs('#modal h3') || qs('.modal-title');
     const adminSection = qs('#admin-section');
 
@@ -670,6 +667,9 @@
     if (musicalJsonArea) musicalJsonArea.value = '';
     if (musicalNameInput) musicalNameInput.value = '';
     if (musicalColorInput) musicalColorInput.value = '#ff7043';
+
+    // Populate catalog list AFTER profile UI state is evaluated
+    populateCatalogList();
   }
 
   function closeModal() {
@@ -800,13 +800,13 @@
     updateAdminUI();
   }
 
-  // boot
+  // Boot
   initCatalog();
   ensureAdminProfile();
   refreshProfileSelect();
   renderAll();
 
-  // public debug API
+  // Public debug API
   window.bsv = {
     loadMeta, saveMeta, listProfiles, createProfile, deleteProfile, setActiveProfile,
     getActiveProfile, saveProfile,
