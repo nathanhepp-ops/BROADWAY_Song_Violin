@@ -8,6 +8,19 @@
   const PROFILE_KEY_PREFIX = 'bsv:profile:';
   const CATALOG_KEY = 'bsv:catalog';
   const EXPANDED_CARDS_KEY = 'bsv:expanded_cards';
+  const ADMIN_PIN = '853579';
+
+  /* -------------------------
+     Admin PIN Security Helper
+     ------------------------- */
+  function authenticateAdmin() {
+    const inputPin = prompt('Enter Admin PIN to access this feature:');
+    if (inputPin === ADMIN_PIN) {
+      return true;
+    }
+    alert('Incorrect PIN. Access denied.');
+    return false;
+  }
 
   /* -------------------------
      Expanded State Persistence
@@ -105,6 +118,10 @@
   function listProfiles() { return loadMeta().profiles.slice(); }
 
   function createProfile(name) {
+    if (name && name.trim().toLowerCase() === 'admin') {
+      if (!authenticateAdmin()) return null;
+    }
+
     const meta = loadMeta();
     const id = idGen('p');
     const profile = {
@@ -128,9 +145,18 @@
   }
 
   function setActiveProfile(id) {
+    const targetProfile = loadProfile(id);
+    if (targetProfile && targetProfile.name === 'Admin') {
+      if (!authenticateAdmin()) {
+        refreshProfileSelect();
+        return false;
+      }
+    }
+
     const meta = loadMeta();
     meta.activeProfileId = id;
     saveMeta(meta);
+    return true;
   }
 
   function getActiveProfile() {
@@ -326,23 +352,21 @@
     
     const yScale = d3.scaleLinear().domain([0.4, 5.6]).range([innerH, 0]);
 
-    // Unique gradient ID per container render
     const gradientId = 'violin-gradient-' + Math.random().toString(36).slice(2, 9);
     
-    // Define the 5-color vertical gradient aligned directly with scale tiers
     const defs = svg.append('defs');
     const linearGradient = defs.append('linearGradient')
       .attr('id', gradientId)
-      .attr('x1', '0%').attr('y1', '100%') // 1 (Red) at bottom
-      .attr('x2', '0%').attr('y2', '0%');   // 5 (Dark Green) at top
+      .attr('x1', '0%').attr('y1', '100%')
+      .attr('x2', '0%').attr('y2', '0%');
 
     linearGradient.selectAll('stop')
       .data([
-        { offset: '11.5%', color: '#d9534f' }, // Tier 1: Red
-        { offset: '30.7%', color: '#f0ad4e' }, // Tier 2: Yellow
-        { offset: '50.0%', color: '#adba2d' }, // Tier 3: Yellowish Green
-        { offset: '69.2%', color: '#5cb85c' }, // Tier 4: Light Green
-        { offset: '88.5%', color: '#1f7a36' }  // Tier 5: Dark Green
+        { offset: '11.5%', color: '#d9534f' },
+        { offset: '30.7%', color: '#f0ad4e' },
+        { offset: '50.0%', color: '#adba2d' },
+        { offset: '69.2%', color: '#5cb85c' },
+        { offset: '88.5%', color: '#1f7a36' }
       ])
       .enter().append('stop')
       .attr('offset', d => d.offset)
@@ -436,7 +460,6 @@
       item.dataset.mid = m.id;
 
       if (admin) {
-        // Render Delete button in catalog items when viewing as Admin
         const btnDelete = document.createElement('button');
         btnDelete.className = 'catalog-item-delete';
         btnDelete.textContent = 'Delete';
@@ -448,7 +471,6 @@
         });
         item.appendChild(btnDelete);
       } else {
-        // Normal profile action: clicking adds catalog item to profile
         item.addEventListener('click', () => {
           try {
             const profile = getActiveProfile();
@@ -494,7 +516,6 @@
 
       const songsForM = (profile.songs || []).filter(s => s.musicalId === m.id);
 
-      // --- Calculate Statistics ---
       const validScores = songsForM
         .map(s => s.tier)
         .filter(t => t !== null && t !== undefined && !isNaN(t))
@@ -632,7 +653,6 @@
     if (musicalNameInput) musicalNameInput.value = '';
     if (musicalColorInput) musicalColorInput.value = '#ff7043';
 
-    // Populate catalog list AFTER profile UI state is evaluated
     populateCatalogList();
   }
 
@@ -647,6 +667,7 @@
      ------------------------- */
   function clearAllData() {
     if (!isAdminActive()) return alert('Only Admin can clear data.');
+    if (!authenticateAdmin()) return;
     if (!confirm('Delete ALL profiles and catalog data from this browser? This cannot be undone.')) return;
     Object.keys(localStorage).forEach(k => {
       if (k === META_KEY || k === CATALOG_KEY || k.startsWith(PROFILE_KEY_PREFIX) || k === EXPANDED_CARDS_KEY) {
@@ -665,7 +686,10 @@
      ------------------------- */
   if (btnNewProfile) btnNewProfile.addEventListener('click', () => {
     const name = prompt('New profile name:', 'New Profile'); if (!name) return;
-    createProfile(name); refreshProfileSelect(); renderAll();
+    if (createProfile(name)) {
+      refreshProfileSelect(); 
+      renderAll();
+    }
   });
 
   if (btnDeleteProfile) btnDeleteProfile.addEventListener('click', () => {
@@ -676,7 +700,14 @@
   });
 
   if (btnClearAll) btnClearAll.addEventListener('click', clearAllData);
-  if (profileSelect) profileSelect.addEventListener('change', (e) => { setActiveProfile(e.target.value); renderAll(); });
+  
+  if (profileSelect) profileSelect.addEventListener('change', (e) => { 
+    if (!setActiveProfile(e.target.value)) {
+      return;
+    }
+    renderAll(); 
+  });
+  
   if (btnAddMusical) btnAddMusical.addEventListener('click', () => openModal());
   if (modalClose) modalClose.addEventListener('click', closeModal);
 
