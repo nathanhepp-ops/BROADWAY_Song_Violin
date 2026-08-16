@@ -190,6 +190,50 @@
     localStorage.setItem(CATALOG_KEY, JSON.stringify(catalog));
   }
 
+  /* -------------------------
+     First-run catalog seeding
+     Loads starter musicals/songs from catalog.json, but ONLY if
+     localStorage has no catalog yet (or an empty one). An existing
+     catalog -- including one the admin has edited -- is never
+     touched or overwritten by this.
+     ------------------------- */
+  const CATALOG_SEED_URL = 'catalog.json';
+
+  async function seedCatalogIfEmpty() {
+    try {
+      const raw = localStorage.getItem(CATALOG_KEY);
+      if (raw) {
+        const existing = JSON.parse(raw);
+        if (existing && Array.isArray(existing.musicals) && existing.musicals.length) {
+          return existing; // already has data -- leave it alone
+        }
+      }
+    } catch (e) { /* fall through and try to (re)seed */ }
+
+    try {
+      const res = await fetch(CATALOG_SEED_URL, { cache: 'no-store' });
+      if (res.ok) {
+        const seed = await res.json();
+        if (seed && Array.isArray(seed.musicals)) {
+          const catalog = {
+            version: seed.version || 1,
+            musicals: seed.musicals,
+            songs: Array.isArray(seed.songs) ? seed.songs : [],
+            createdAt: seed.createdAt || nowISO(),
+            updatedAt: nowISO()
+          };
+          localStorage.setItem(CATALOG_KEY, JSON.stringify(catalog));
+          return catalog;
+        }
+      }
+    } catch (e) { /* offline, blocked, bad file -- fall back below */ }
+
+    // Fallback: empty catalog, same as original first-run behavior
+    const empty = { version: 1, musicals: [], songs: [], createdAt: nowISO(), updatedAt: nowISO() };
+    localStorage.setItem(CATALOG_KEY, JSON.stringify(empty));
+    return empty;
+  }
+
   function addCatalogMusical(musical = {}, songs = []) {
     const catalog = loadCatalog();
     let mid = musical.id || idGen('m');
@@ -796,10 +840,12 @@
   }
 
   // Boot
-  initCatalog();
-  ensureAdminProfile();
-  refreshProfileSelect();
-  renderAll();
+  (async function boot() {
+    await seedCatalogIfEmpty();
+    ensureAdminProfile();
+    refreshProfileSelect();
+    renderAll();
+  })();
 
   // Public debug API
   window.bsv = {
@@ -807,6 +853,7 @@
     getActiveProfile, saveProfile,
     loadCatalog, saveCatalog, addCatalogMusical, deleteCatalogMusical,
     addCatalogMusicalToProfile, addImportedMusicalToProfile,
+    seedCatalogIfEmpty,
     renderAll
   };
 
