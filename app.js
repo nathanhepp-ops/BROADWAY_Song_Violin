@@ -368,33 +368,6 @@
         .attr('stroke', '#222')
         .attr('stroke-width', 1)
         .attr('opacity', 0.85);
-
-      if (options.dotData && options.dotData.length) {
-        const densArr = density;
-        function densityAt(y) {
-          for (let i = 0; i < densArr.length - 1; i++) {
-            const a = densArr[i][0], b = densArr[i + 1][0];
-            if (y >= a && y <= b) {
-              const fa = densArr[i][1], fb = densArr[i + 1][1];
-              const t = (y - a) / (b - a);
-              return fa + (fb - fa) * t;
-            }
-          }
-          const nearest = densArr.reduce((acc, d) => Math.abs(d[0] - y) < Math.abs(acc[0] - y) ? d : acc, densArr[0]);
-          return nearest ? nearest[1] : 0;
-        }
-
-        const maxJig = innerW * 0.45;
-        const maxDens = d3.max(density, d => d[1]) || 1;
-        const dots = g.selectAll('.dot').data(options.dotData, d => d.id);
-        const enter = dots.enter().append('circle').attr('r', 5).attr('stroke', '#ffffff').attr('stroke-width', 1.5).attr('opacity', 0.95);
-        enter.attr('cx', d => {
-          const dens = densityAt(d.y) || 0.001;
-          const maxX = maxDens ? (dens / maxDens) * maxJig : 1;
-          const r = (Math.random() * 2 - 1) * maxX;
-          return xScaleDensity(r);
-        }).attr('cy', d => yScale(d.y)).attr('fill', d => d.color || '#333').append('title').text(d => d.title);
-      }
     } else {
       g.append('line')
         .attr('x1', innerW / 2)
@@ -494,13 +467,6 @@
     });
   }
 
-  function makeDotData(profile, songs) {
-    return (songs || []).filter(s => s.tier !== null && s.tier !== undefined).map(s => {
-      const m = profile.musicals.find(x => x.id === s.musicalId) || { color: '#999', name: 'Unknown' };
-      return { id: s.id, title: `${s.title} — ${m.name}`, y: s.tier, color: m.color };
-    });
-  }
-
   function renderOverview(profile) {
     const vals = profile.songs.map(s => s.tier);
     loadD3And(() => {
@@ -508,8 +474,7 @@
         width: overviewEl.clientWidth || 900,
         height: 260,
         fill: 'rgba(247,243,236,0.95)',
-        stroke: '#d6d0c2',
-        dotData: makeDotData(profile, profile.songs)
+        stroke: '#d6d0c2'
       });
     });
   }
@@ -624,8 +589,7 @@
         renderViolin(violinWrap, vals, { 
           height: 220, 
           fill: 'rgba(255,255,255,0.96)', 
-          stroke: '#e0dbcc', 
-          dotData: makeDotData(profile, songsForM) 
+          stroke: '#e0dbcc'
         });
       });
 
