@@ -1,10 +1,11 @@
-const CACHE_NAME = 'broadway-cache-v1';
+const CACHE_NAME = 'broadway-cache-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/manifest.json',
+  './',
+  './index.html',
+  './styles.css',
+  './app.js',
+  './manifest.json',
+  './catalog.json',
   // D3 will be cached after first fetch
   'https://d3js.org/d3.v7.min.js'
 ];
@@ -17,7 +18,11 @@ self.addEventListener('install', evt => {
 });
 
 self.addEventListener('activate', evt => {
-  evt.waitUntil(self.clients.claim());
+  evt.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', evt => {
@@ -30,6 +35,6 @@ self.addEventListener('fetch', evt => {
       const resClone = res.clone();
       caches.open(CACHE_NAME).then(cache => cache.put(req, resClone));
       return res;
-    }).catch(() => caches.match(req).then(m => m || caches.match('/index.html')))
+    }).catch(() => caches.match(req).then(m => m || caches.match('./index.html')))
   );
 });
